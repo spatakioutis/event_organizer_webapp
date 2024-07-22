@@ -10,7 +10,7 @@ const bookingsSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Event',
 		required: true
-	}
+	},
 	date: {
 		type: Date,
 		required: true
