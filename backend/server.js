@@ -3,11 +3,13 @@ import bodyParser from "body-parser"
 import cors from "cors"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
-import multer from "multer"
 import helmet from "helmet"
 import morgan from "morgan"
 import path from "path"
 import { fileURLToPath } from "url"
+
+import authRoute from "./routes/auth.js"
+import { verifyToken } from "./middleware/authorization.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -22,22 +24,15 @@ app.use(morgan("common"))
 app.use(bodyParser.json({ limit: "30mb", extended: true }))
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 app.use(cors())
+app.use("/assets", express.static(path.join(__dirname, "public/assets")))
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      	cb(null, "public/assets")
-    },
-    filename: function (req, file, cb) {
-      	cb(null, file.originalname)
-    },
-})
-const upload = multer({ storage })
+app.use('/auth', authRoute)
 
-app.get("/test", (req, res) => {
-	res.status(200).json({
-		message: "Hi from backend"
-	})
-})
+// app.get("/test", verifyToken, (req, res) => {
+// 	res.status(200).json({
+// 		message: "Hello, you are authorized!"
+// 	})
+// })
 
 const PORT = process.env.PORT || 6001
 
