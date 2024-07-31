@@ -9,6 +9,7 @@ import path from "path"
 import { fileURLToPath } from "url"
 
 import authRoute from "./routes/authRoute.js"
+import userRoute from "./routes/userRoute.js"
 import { verifyToken } from "./middleware/authorization.js"
 
 const __filename = fileURLToPath(import.meta.url)
@@ -27,7 +28,7 @@ app.use(cors())
 app.use("/assets", express.static(path.join(__dirname, "public/assets")))
 
 app.use('/auth', authRoute)
-
+app.use('/users', userRoute)
 // app.get("/test", verifyToken, (req, res) => {
 // 	res.status(200).json({
 // 		message: "Hello, you are authorized!"

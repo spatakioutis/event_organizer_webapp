@@ -32,11 +32,20 @@ const register = async (req, res) => {
         })
 
         // save new user
-        const savedUser = await newUser.save().lean()
+        const savedUser = await newUser.save()
 
         res.status(201).json({
             message: 'Registration successful',
-            user: savedUser
+            user: {
+                username:   savedUser.username,
+                firstName:  savedUser.firstName,
+                lastName:   savedUser.lastName,
+                email:      savedUser.email,
+                birthDate:  savedUser.birthDate,
+                profilePic: savedUser.profilePic,
+                phone:      savedUser.phone,
+                _id:        savedUser._id
+            }
         })
     }
     catch (error) {
