@@ -22,7 +22,7 @@ const eventsSchema = mongoose.Schema({
 	},
 	image: {
 		type: String, 
-		required: true
+		//required: true
 	},
 	specificDateInfo: [{
 		date: {

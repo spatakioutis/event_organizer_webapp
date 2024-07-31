@@ -10,6 +10,7 @@ import { fileURLToPath } from "url"
 
 import authRoute from "./routes/authRoute.js"
 import userRoute from "./routes/userRoute.js"
+import eventRoute from "./routes/eventRoute.js"
 import { verifyToken } from "./middleware/authorization.js"
 
 const __filename = fileURLToPath(import.meta.url)
@@ -27,14 +28,12 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 app.use(cors())
 app.use("/assets", express.static(path.join(__dirname, "public/assets")))
 
+// routes
 app.use('/auth', authRoute)
 app.use('/users', userRoute)
-// app.get("/test", verifyToken, (req, res) => {
-// 	res.status(200).json({
-// 		message: "Hello, you are authorized!"
-// 	})
-// })
+app.use('/events', eventRoute)
 
+// database connection and server init
 const PORT = process.env.PORT || 6001
 
 mongoose.connect(process.env.MONGODB_URI)

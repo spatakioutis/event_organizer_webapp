@@ -35,7 +35,7 @@ const register = async (req, res) => {
         const savedUser = await newUser.save()
 
         res.status(201).json({
-            message: 'Registration successful',
+            message: 'User registration successful',
             user: {
                 username:   savedUser.username,
                 firstName:  savedUser.firstName,
