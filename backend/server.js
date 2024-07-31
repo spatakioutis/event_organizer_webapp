@@ -8,7 +8,7 @@ import morgan from "morgan"
 import path from "path"
 import { fileURLToPath } from "url"
 
-import authRoute from "./routes/auth.js"
+import authRoute from "./routes/authRoute.js"
 import { verifyToken } from "./middleware/authorization.js"
 
 const __filename = fileURLToPath(import.meta.url)
