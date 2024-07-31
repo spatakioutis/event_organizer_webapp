@@ -61,7 +61,7 @@ const deleteEvent = async (req, res) => {
             })
         }
 
-        if (userID !== event.host) {
+        if (userID !== event.host.toString()) {
             return res.status(400).json({
                 message: 'Event does not belong to the user'
             })
@@ -99,7 +99,8 @@ const updateEvent = async (req, res) => {
     try {
 
         // get data
-        const { updates } = req.body
+        const updatesString = req.body.updates
+        const updates = JSON.parse(updatesString)
 
         if (req.file) {
             const imagePath = req.file.path.replace('public/', '')
@@ -117,7 +118,7 @@ const updateEvent = async (req, res) => {
             })
         }
 
-        if (userID !== event.host) {
+        if (userID !== event.host.toString()) {
             return res.status(400).json({
                 message: 'Event does not belong to the user'
             })
