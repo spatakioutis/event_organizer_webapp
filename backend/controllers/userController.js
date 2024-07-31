@@ -1,8 +1,12 @@
 import User from "../models/Users.js"
 import bcrypt from 'bcryptjs'
+import fs from "fs"
+import path from "path"
 
 const changeUserInfo = async (req, res) => {
     try {
+
+        // get data
         const userID = req.user.id
         const { updates } = req.body
 
@@ -10,9 +14,10 @@ const changeUserInfo = async (req, res) => {
             const imagePath = req.file.path.replace('public/', '')
             updates.profilePic = imagePath
         }
-        
+
+        // update user
         const updatedUser = await User.findOneAndUpdate(
-            {_id: userID},
+            { _id: userID },
             { $set: updates },
             { new: true, runValidators: true }
         ).lean()
@@ -70,11 +75,27 @@ const deleteUser = async (req, res) => {
     try {
         const user = await User.findById(userID)
 
+        // ask for password
         const passwordMatch = await bcrypt.compare(password, user.password)
         if (!passwordMatch) {
             return res.status(401).json({ 
                 error: 'Invalid password'
             })
+        }
+
+        // delete user
+        if (user.profilePic) {
+            const filePath = path.join(__dirname, 'public/assets', user.profilePic)
+
+            if (fs.existsSync(filePath)) {
+                fs.unlink(filePath, (err) => {
+                    if (err) {
+                        console.error('Error deleting file:', err)
+                        return res.status(500).json({ message: 'Error deleting file' })
+                    }
+                    console.log('File deleted successfully')
+                })
+            }
         }
 
         await User.deleteOne({_id: userID})
