@@ -6,12 +6,12 @@ const createEvent = async (req, res) => {
 
         // get event data
         const host = req.user.id
+        const imagePath = req.file.path.replace('public/', '')
 
         const {
             type,
             title,
             duration,
-            //image,
             description,
             ticketPrice,
             specificDateInfo
@@ -23,12 +23,11 @@ const createEvent = async (req, res) => {
             title,
             host,
             duration,
-            //image,
+            image: imagePath,
             description,
             ticketPrice,
             specificDateInfo
         })
-
 
         // save new event
         const savedEvent = newEvent.save()

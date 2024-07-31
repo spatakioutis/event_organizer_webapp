@@ -5,6 +5,6 @@ import { verifyToken } from "../middleware/authorization.js"
 
 const router = express.Router()
 
-router.post("/", verifyToken, createEvent)
+router.post("/", verifyToken, upload.single('image'), createEvent)
 
 export default router

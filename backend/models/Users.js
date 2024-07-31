@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema({
     },
     profilePic: {
         type: String,
-        default: ''
+        default: 'public/assets/default_pic.png',
     },
     phone: {
         type: String, 

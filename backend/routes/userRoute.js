@@ -5,7 +5,7 @@ import { verifyToken } from "../middleware/authorization.js"
 
 const router = express.Router()
 
-router.put('/info', verifyToken, changeUserInfo)
+router.put('/info', verifyToken, upload.single('image'), changeUserInfo)
 router.put('/password', verifyToken, changePassword)
 router.delete('/', verifyToken, deleteUser)
 

@@ -5,6 +5,8 @@ import User from '../models/Users.js'
 const register = async (req, res) => {
 
     try {
+        const imagePath = req.file.path.replace('public/', '')
+
         // destruct body
         const {
             username,
@@ -28,6 +30,7 @@ const register = async (req, res) => {
             password: hashedPassword,
             email, 
             birthDate,
+            profilePic: imagePath,
             phone
         })
 
