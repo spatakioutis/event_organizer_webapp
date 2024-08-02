@@ -28,11 +28,11 @@ const createEvent = async (req, res) => {
             image: imagePath,
             description,
             ticketPrice,
-            specificDateInfo
+            specificDateInfo : JSON.parse(specificDateInfo)
         })
 
         // save new event
-        const savedEvent = newEvent.save()
+        const savedEvent = await newEvent.save()
 
         res.status(200).json({
             event: savedEvent,
@@ -143,4 +143,72 @@ const updateEvent = async (req, res) => {
     }
 }
 
-export { createEvent, deleteEvent, updateEvent }
+const getSingleEvent = async (req, res) => {
+    try {
+
+        // get data
+        const { eventID } = req.params
+        
+        // get event
+        const event = await Event.findById(eventID)
+        if (!event) {
+            return res.status(404).json({
+                message: "Event not found"
+            })
+        }
+
+        res.status(200).json({
+            message: "Event found successfully",
+            event
+        })
+
+    }
+    catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+const getEventsByType = async (req, res) => {
+    try {
+
+        // get data
+        const { type, fetchAll } = req.query
+
+        // get events
+        const today = new Date()
+        let events = await Event.find({ type, 'specificDateInfo.date': { $gte: today } })
+                                .sort({ createdAt: -1 })
+
+        if (!fetchAll) {
+            events = events.limit(4)
+        }
+
+        // get only essential
+        const eventData = events.map(event => {
+
+            const dates = event.specificDateInfo.map(info => info.date)
+            const locations = event.specificDateInfo.map(info => info.location)
+
+            return {
+                title: event.title,
+                image: event.image,
+                dates,
+                locations
+            }
+        })
+
+        res.status(200).json({
+            message: "Events found by type successfully",
+            events: eventData
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+export { createEvent, deleteEvent, updateEvent, getSingleEvent, getEventsByType }

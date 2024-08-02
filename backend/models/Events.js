@@ -53,7 +53,7 @@ const eventsSchema = mongoose.Schema({
 		required: true,
 		min: [0, 'Ticket price must be a positive number']
 	}
-})
+}, { timestamps: true })
 
 const Event = mongoose.model('Event', eventsSchema, 'events')
 

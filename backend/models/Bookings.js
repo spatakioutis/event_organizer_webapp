@@ -20,7 +20,7 @@ const bookingsSchema = mongoose.Schema({
 		required: true,
 		min: [1, 'Number of tickets must be an integer greater than 1 ']
 	}
-})
+}, { timestamps: true })
 
 const Booking = mongoose.model('Booking', bookingsSchema, 'bookings')
 
