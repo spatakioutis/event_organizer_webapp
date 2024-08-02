@@ -4,21 +4,27 @@ const updateEventStatus = async () => {
     const now = new Date()
 
     try {
-        // Find events where at least one date is in the past and its status is not 'past'
+        // Fetch events
         const events = await Event.find({})
 
-        // Iterate over each event and update specificDateInfo if necessary
+        // Iterate over each event and update status if necessary
         for (let event of events) {
-            let isUpdated = false
+            const oldStatus = event.status
 
-            for (let specificDateInfo of event.specificDateInfo) {
-                if (specificDateInfo.date < now && specificDateInfo.status !== 'past') {
-                    specificDateInfo.status = 'past'
-                    isUpdated = true
-                }
+            const allDatesPast = event.specificDateInfo.every(specificDateInfo => specificDateInfo.date < now)
+            const noDatesPast = event.specificDateInfo.every(specificDateInfo => specificDateInfo.date > now)
+
+            if (allDatesPast) {
+                event.status = 'past'
+            }
+            else if (noDatesPast) {
+                event.status = 'upcoming'
+            }
+            else {
+                event.status = 'ongoing'
             }
 
-            if (isUpdated) {
+            if (oldStatus !== event.status) {
                 await event.save()
             }
         }

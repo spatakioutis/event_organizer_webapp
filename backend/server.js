@@ -35,7 +35,7 @@ app.use('/users', userRoute)
 app.use('/events', eventRoute)
 
 // scheduled scannings for database updates
-setInterval(updateEventStatus, 24 * 60 * 60 * 1000)
+setzInterval(updateEventStatus, 24 * 60 * 60 * 1000)
 
 // database connection and server init
 const PORT = process.env.PORT || 6001
