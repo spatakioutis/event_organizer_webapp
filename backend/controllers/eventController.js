@@ -19,6 +19,9 @@ const createEvent = async (req, res) => {
             specificDateInfo
         } = req.body
 
+        const specificDateInfoObj = JSON.parse(specificDateInfo)
+        specificDateInfoObj.seatsAvailable = specificDateInfoObj.totalSeats
+
         // create new event
         const newEvent = new Event({
             type,
@@ -28,7 +31,7 @@ const createEvent = async (req, res) => {
             image: imagePath,
             description,
             ticketPrice,
-            specificDateInfo : JSON.parse(specificDateInfo)
+            specificDateInfo : specificDateInfoObj
         })
 
         // save new event
@@ -172,7 +175,6 @@ const getSingleEvent = async (req, res) => {
 
 const getEventsByType = async (req, res) => {
     try {
-
         // get data
         const { type, fetchAll } = req.query
 
@@ -211,4 +213,38 @@ const getEventsByType = async (req, res) => {
     }
 }
 
-export { createEvent, deleteEvent, updateEvent, getSingleEvent, getEventsByType }
+const getEventsByNewest = async (req, res) => {
+    try {
+        // get events
+        const today = new Date()
+        let events = await Event.find({ 'specificDateInfo.date': { $gte: today } })
+                                .sort({ createdAt: -1 })
+                                .limit(4)
+
+        // get only essential
+        const eventData = events.map(event => {
+
+            const dates = event.specificDateInfo.map(info => info.date)
+            const locations = event.specificDateInfo.map(info => info.location)
+
+            return {
+                title: event.title,
+                image: event.image,
+                dates,
+                locations
+            }
+        })
+
+        res.status(200).json({
+            message: "Events found by newest successfully",
+            events: eventData
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+export { createEvent, deleteEvent, updateEvent, getSingleEvent, getEventsByType, getEventsByNewest }
