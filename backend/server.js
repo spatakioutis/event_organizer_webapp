@@ -8,10 +8,11 @@ import morgan from "morgan"
 import path from "path"
 import { fileURLToPath } from "url"
 
+import { updateEventStatus } from "./scheduledTaskManager.js"
+
 import authRoute from "./routes/authRoute.js"
 import userRoute from "./routes/userRoute.js"
 import eventRoute from "./routes/eventRoute.js"
-import { verifyToken } from "./middleware/authorization.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -33,15 +34,18 @@ app.use('/auth', authRoute)
 app.use('/users', userRoute)
 app.use('/events', eventRoute)
 
+// scheduled scannings for database updates
+setInterval(updateEventStatus, 24 * 60 * 60 * 1000)
+
 // database connection and server init
 const PORT = process.env.PORT || 6001
 
 mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
-	console.log("Database connected successfully")
+	console.log("[Server] Database connected successfully")
 
 	app.listen(PORT, () => {
-		console.log(`Server listening on port ${PORT}`)
+		console.log(`[Server] Listening on port ${PORT}`)
 	})
 })
-.catch(error => console.error("Error: ", error))
+.catch(error => console.error("[Server] Error: ", error))

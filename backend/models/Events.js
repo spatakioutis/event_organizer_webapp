@@ -38,6 +38,11 @@ const eventsSchema = mongoose.Schema({
 			required: true,
 			min: [0, 'Seats available must be a non-negative number']
 		},
+		totalSeats: {
+			type: Number,
+			required: true,
+			min: [0, 'Total seats must be a non-negative number']
+		},
 		status: {
 			type: String, 
 			enum: ['upcoming', 'ongoing', 'past'],

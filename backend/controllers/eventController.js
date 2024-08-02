@@ -51,7 +51,7 @@ const deleteEvent = async (req, res) => {
 
         // get event
         const userID = req.user.id
-        const { eventID } = req.query
+        const { eventID } = req.params
         const event = await Event.findById(eventID)
 
         // check
@@ -108,7 +108,7 @@ const updateEvent = async (req, res) => {
         }
 
         const userID = req.user.id
-        const { eventID } = req.query
+        const { eventID } = req.params
         const event = await Event.findById(eventID)
 
         // check
