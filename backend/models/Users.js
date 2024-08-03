@@ -1,4 +1,6 @@
 import mongoose from "mongoose"
+import Event from "./Events.js"
+import Booking from "./Bookings.js"
 
 const userSchema = mongoose.Schema({
     username: { 
@@ -35,6 +37,27 @@ const userSchema = mongoose.Schema({
         required: true
     }
 }, { timestamps: true })
+
+userSchema.pre('deleteOne', { document: true, query: false }, async function(next) {
+    const userID = this._id
+
+    try {
+        // Delete all bookings associated with the user
+        await Booking.deleteMany({ user: userID })
+
+        // Find all events hosted by the user
+        const eventsHostedByUser = await Event.find({ host: userID })
+
+        await Promise.all(eventsHostedByUser.map(async (event) => {
+            await Booking.deleteMany({ event: event._id })
+            await event.deleteOne()
+        }))
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+})
 
 const User = mongoose.model('User', userSchema, 'users')
 

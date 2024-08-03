@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import Event from './Events.js'
 
 const bookingsSchema = mongoose.Schema({
 	user: {
@@ -21,6 +22,23 @@ const bookingsSchema = mongoose.Schema({
 		min: [1, 'Number of tickets must be an integer greater than 1 ']
 	}
 }, { timestamps: true })
+
+bookingsSchema.pre('deleteOne', { document: true, query: false }, async function(next) {
+    try {
+        const event = await Event.findById(this.event)
+
+		event.specificDateInfo.forEach(dateInfo => {
+			if (dateInfo.date.toString() === this.date.toString()) {
+				dateInfo.seatsAvailable += this.numOfTickets
+			}
+		})
+		await event.save()
+ 
+		next()
+    } catch (error) {
+        next(error)
+    }
+})
 
 const Booking = mongoose.model('Booking', bookingsSchema, 'bookings')
 

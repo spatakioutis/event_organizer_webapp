@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import Booking from "./Bookings.js"
 
 const eventsSchema = mongoose.Schema({
 	type: {
@@ -59,6 +60,19 @@ const eventsSchema = mongoose.Schema({
 		min: [0, 'Ticket price must be a positive number']
 	}
 }, { timestamps: true })
+
+// Delete all bookings associated with this event
+eventsSchema.pre('deleteOne', { document: true, query: false }, async function(next) {
+    const eventID = this._id
+
+    try {
+        await Booking.deleteMany({ event: eventID })
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+})
 
 const Event = mongoose.model('Event', eventsSchema, 'events')
 
