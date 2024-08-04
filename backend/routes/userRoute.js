@@ -5,8 +5,10 @@ import { verifyToken } from "../middleware/authorization.js"
 
 const router = express.Router()
 
-router.put('/info', verifyToken, upload.single('image'), changeUserInfo)
-router.put('/password', verifyToken, changePassword)
-router.delete('/', verifyToken, deleteUser)
+router.use(verifyToken)
+
+router.put('/info', upload.single('image'), changeUserInfo)
+router.put('/password', changePassword)
+router.delete('/', deleteUser)
 
 export default router

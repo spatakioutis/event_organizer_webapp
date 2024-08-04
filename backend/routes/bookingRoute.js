@@ -4,8 +4,10 @@ import { createBooking, deleteBooking, getUserBookings } from "../controllers/bo
 
 const router = express.Router()
 
-router.post("/", verifyToken, createBooking)
-router.delete("/:id", verifyToken, deleteBooking)
-router.get("/:bookingsStatus", verifyToken, getUserBookings)
+router.use(verifyToken)
+
+router.post("/", createBooking)
+router.delete("/:id", deleteBooking)
+router.get("/:bookingsStatus", getUserBookings)
 
 export default router

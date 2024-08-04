@@ -5,11 +5,13 @@ import { verifyToken } from "../middleware/authorization.js"
 
 const router = express.Router()
 
-router.post("/", verifyToken, upload.single('image'), createEvent)
-router.put("/:id", verifyToken, upload.single('image'), updateEvent)
-router.delete("/:id", verifyToken, deleteEvent)
-router.get("/:id", verifyToken, getSingleEvent)
-router.get("/type", verifyToken, getEventsByType)
-router.get("/newest", verifyToken, getEventsByNewest)
+router.use(verifyToken)
+
+router.post("/", upload.single('image'), createEvent)
+router.put("/:id", upload.single('image'), updateEvent)
+router.delete("/:id", deleteEvent)
+router.get("/:id", getSingleEvent)
+router.get("/type", getEventsByType)
+router.get("/newest", getEventsByNewest)
 
 export default router
