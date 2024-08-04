@@ -37,7 +37,7 @@ const createEvent = async (req, res) => {
         // save new event
         const savedEvent = await newEvent.save()
 
-        res.status(200).json({
+        res.status(201).json({
             event: savedEvent,
             message: "Event registration successful"
         })

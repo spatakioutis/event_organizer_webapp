@@ -27,13 +27,15 @@ bookingsSchema.pre('deleteOne', { document: true, query: false }, async function
     try {
         const event = await Event.findById(this.event)
 
-		event.specificDateInfo.forEach(dateInfo => {
-			if (dateInfo.date.toString() === this.date.toString()) {
-				dateInfo.seatsAvailable += this.numOfTickets
-			}
-		})
-		await event.save()
- 
+		if ( event ) {
+			event.specificDateInfo.forEach(dateInfo => {
+				if (dateInfo.date.toString() === this.date.toString()) {
+					dateInfo.seatsAvailable += this.numOfTickets
+				}
+			})
+			await event.save()
+		}
+		
 		next()
     } catch (error) {
         next(error)

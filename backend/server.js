@@ -13,6 +13,7 @@ import { updateEventStatus } from "./scheduledTaskManager.js"
 import authRoute from "./routes/authRoute.js"
 import userRoute from "./routes/userRoute.js"
 import eventRoute from "./routes/eventRoute.js"
+import bookingRoute from "./routes/bookingRoute.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -33,6 +34,7 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")))
 app.use('/auth', authRoute)
 app.use('/users', userRoute)
 app.use('/events', eventRoute)
+app.use('/bookings', bookingRoute)
 
 // scheduled scannings for database updates
 setInterval(updateEventStatus, 24 * 60 * 60 * 1000)
