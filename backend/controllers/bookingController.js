@@ -86,7 +86,7 @@ const getUserBookings = async (req, res) => {
 
         let bookingsInfo = await Promise.all(bookings.map(async (booking)  => { 
 
-            if ( (booking.date > today && bookingsStatus === 'upcoming') || 
+            if ( (booking.date >= today && bookingsStatus === 'upcoming') || 
                  (booking.date < today && bookingsStatus === 'past') ) {
                 
                 const event = Event.findById(booking.event)
