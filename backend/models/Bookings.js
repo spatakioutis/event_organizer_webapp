@@ -29,7 +29,7 @@ bookingsSchema.pre('deleteOne', { document: true, query: false }, async function
 
 		if ( event ) {
 			event.specificDateInfo.forEach(dateInfo => {
-				if (dateInfo.date.toString() === this.date.toString()) {
+				if (dateInfo.date.toISOString() === this.date.toISOString()) {
 					dateInfo.seatsAvailable += this.numOfTickets
 				}
 			})
@@ -37,6 +37,24 @@ bookingsSchema.pre('deleteOne', { document: true, query: false }, async function
 		}
 		
 		next()
+    } catch (error) {
+        next(error)
+    }
+})
+
+bookingsSchema.post('save', { document: true, query: false }, async function() {
+    try {
+        const event = await Event.findById(this.event)
+
+		if ( event ) {
+			event.specificDateInfo.forEach(dateInfo => {
+				if (dateInfo.date.toISOString() === this.date.toISOString()) {
+					dateInfo.seatsAvailable -= this.numOfTickets
+				}
+			})
+			await event.save()
+		}
+
     } catch (error) {
         next(error)
     }
