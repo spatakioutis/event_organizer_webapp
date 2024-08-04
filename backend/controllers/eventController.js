@@ -2,6 +2,11 @@ import Event from "../models/Events.js"
 import User from "../models/Users.js"
 import fs from "fs"
 import path from "path"
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 
 const createEvent = async (req, res) => {
     try {
@@ -20,7 +25,10 @@ const createEvent = async (req, res) => {
         } = req.body
 
         const specificDateInfoObj = JSON.parse(specificDateInfo)
-        specificDateInfoObj.seatsAvailable = specificDateInfoObj.totalSeats
+
+        for (let info of specificDateInfoObj) {
+            info.seatsAvailable = info.totalSeats
+        }
 
         // create new event
         const newEvent = new Event({
@@ -54,7 +62,8 @@ const deleteEvent = async (req, res) => {
 
         // get event
         const userID = req.user.id
-        const { eventID } = req.params
+        console.log(req.params)
+        const eventID = req.params.id
         const event = await Event.findById(eventID)
 
         // check
@@ -111,7 +120,7 @@ const updateEvent = async (req, res) => {
         }
 
         const userID = req.user.id
-        const { eventID } = req.params
+        const eventID = req.params.id
         const event = await Event.findById(eventID)
 
         // check
@@ -150,7 +159,7 @@ const getSingleEvent = async (req, res) => {
     try {
 
         // get data
-        const { eventID } = req.params
+        const eventID = req.params.id
         
         // get event
         const event = await Event.findById(eventID)

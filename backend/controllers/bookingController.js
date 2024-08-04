@@ -47,7 +47,7 @@ const createBooking = async (req, res) => {
 const deleteBooking = async (req, res) => {
     try {
         const userID = req.user.id
-        const { bookingID } = req.params
+        const bookingID = req.params.id
 
         const booking = await Booking.findById(bookingID)
 
