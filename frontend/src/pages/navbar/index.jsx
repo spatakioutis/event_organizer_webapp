@@ -7,9 +7,7 @@ import {
     Select,
     MenuItem,
     FormControl,
-    useTheme,
-    useMediaQuery,
-    withTheme
+    useMediaQuery
  } from "@mui/material"
 import {
     Search,
@@ -31,28 +29,32 @@ const Navbar = () => {
     const user = useSelector((state) => state.user)
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)")
 
+    //const fullName = `${user.firstName} ${user.lastName}`
+    const fullName = user ? `${user.firstName} ${user.lastName}` : "Guest";
+    
     return (
-        <FlexBetween padding="1rem 6%" backgroundColor="blue">
+        <FlexBetween padding="1rem 6%" backgroundColor="white">
             <FlexBetween gap="1.75rem">
                 <Typography
                     fontWeight="bold"
                     fontSize="clamp(1rem, 2rem, 2.25rem)"
-                    color="red"
+                    color="#800080"
                     onClick={() => navigate("/home")}
                     sx={{
                         ":hover": {
-                            color: "yellow",
+                            color: "#9370DB",
                             cursor: "pointer"
                         }
                     }}
                     marginLeft="-20px"
-                    backgroundColor="green"
+                    backgroundColor="white"
                 >
-                    ApplicationName
+                    more.com
                 </Typography>
                 {isNonMobileScreens && (
                     <FlexBetween 
-                        backgroundColor="grey" 
+                        backgroundColor="white"
+                        border="1px solid #ccc" 
                         borderRadius="9px" 
                         gap="3rem"
                         padding="0.1rem 1.5rem"
@@ -68,28 +70,32 @@ const Navbar = () => {
             {/*desktop nav*/}
             {isNonMobileScreens ? (
                 <FlexBetween gap="2rem">
-                    <Message sx={{fontSize: "25px"}} />
-                    <Notifications sx={{fontSize: "25px"}} />
-                    <Help sx={{fontSize: "25px"}} />
-                    <FormControl variant="standard">
+
+                    <Message sx={{fontSize: "25px", color: "black", ":hover": {cursor: "pointer"}}} />
+                    <Notifications sx={{fontSize: "25px", color: "black", ":hover": {cursor: "pointer"}}} />
+                    <Help sx={{fontSize: "25px", color: "black", ":hover": {cursor: "pointer"}}} />
+                    
+                    <FormControl variant="standard" value={fullName}>
                         <Select
+                            value={fullName}
                             sx={{
-                                backgroundColor: "red",
+                                border: "1px solid #ccc",
+                                backgroundColor: "#f0f0f0",
                                 width: "150px",
                                 borderRadius: "0.25rem",
                                 p: "0.25rem 1rem",
-                                ".MuiSvgIcon-root": {
+                                "& .MuiSvgIcon-root": {
                                     pr: "0.25rem",
                                     width: "3rem"
                                 },
-                                ".MuiSelect-select:focus": {
-                                    backgroundColor: "yellow"
+                                "& .MuiSelect-select:focus": {
+                                    backgroundColor: "#f0f0f0"
                                 }
                             }}
                             input={<InputBase />}
                         >
-                            <MenuItem >
-                                <Typography>username</Typography>
+                            <MenuItem value={fullName}>
+                                <Typography>{fullName}</Typography>
                             </MenuItem>
                             <MenuItem onClick={() => dispatch(setLogout())}>
                                 Log Out
@@ -134,9 +140,10 @@ const Navbar = () => {
                         alignItems="center"
                         gap="3rem"
                     >
-                        <Message sx={{fontSize: "25px"}} />
-                        <Notifications sx={{fontSize: "25px"}} />
-                        <Help sx={{fontSize: "25px"}} />
+                        <Message sx={{fontSize: "25px", color: "black"}} />
+                        <Notifications sx={{fontSize: "25px", color: "black"}} />
+                        <Help sx={{fontSize: "25px", color: "black"}} />
+
                         <FormControl variant="standard">
                             <Select
                                 sx={{
@@ -155,7 +162,7 @@ const Navbar = () => {
                                 input={<InputBase />}
                             >
                                 <MenuItem >
-                                    <Typography>username</Typography>
+                                    <Typography>{fullName}</Typography>
                                 </MenuItem>
                                 <MenuItem onClick={() => dispatch(setLogout())}>
                                     Log Out
