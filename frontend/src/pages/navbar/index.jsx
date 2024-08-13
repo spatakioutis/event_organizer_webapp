@@ -16,24 +16,19 @@ import {
     Search,
     Message,
     Notifications,
-    Help,
-    Menu,
-    Close
+    Help
 } from "@mui/icons-material"
 import { useDispatch, useSelector } from "react-redux"
 import { setLogout } from "../../state"
 import { useNavigate, Link } from "react-router-dom"
 import FlexBetween from "../../components/FlexBetween"
 
-
 const Navbar = () => {
-    const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = useSelector((state) => state.user)
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)")
 
-    //const fullName = `${user.firstName} ${user.lastName}`
     const fullName = user ? `${user.firstName} ${user.lastName}` : "Guest";
     
     const handleAuthAction = () => {
@@ -85,10 +80,9 @@ const Navbar = () => {
                 )}
             </FlexBetween>
 
-            {/*desktop nav*/}
-            {isNonMobileScreens ? (
+            {/* Desktop nav */}
+            {isNonMobileScreens && (
                 <FlexBetween gap="2rem">
-
                     <Tabs value={false} aria-label="Navigation Tabs">
                         <StyledTab
                             label="Movies"
@@ -139,76 +133,7 @@ const Navbar = () => {
                             </MenuItem>
                         </Select>
                     </FormControl>
-
-                </FlexBetween> 
-            ) : (
-                <IconButton onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}>
-                    <Menu />
-                </IconButton>
-            )}
-
-            {/* Mobile nav*/}
-            {!isNonMobileScreens && isMobileMenuToggled && (
-                <Box
-                    position="fixed"
-                    right="0"
-                    bottom="0"
-                    height="100%"
-                    zIndex="10"
-                    maxWidth="500px"
-                    minWidth="300px"
-                    backgroundColor="red"
-                >
-                    {/* close icon */}
-                    <Box 
-                        display="flex" 
-                        justifyContent="flex-end"
-                        p="1rem"
-                    >
-                        <IconButton onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}>
-                            <Close />
-                        </IconButton>
-                    </Box>
-
-                    {/* menu items */}
-                    <FlexBetween 
-                        display="flex" 
-                        flexDirection="column"  
-                        justifyContent="center"
-                        alignItems="center"
-                        gap="3rem"
-                    >
-                        <Message sx={{fontSize: "25px", color: "black"}} />
-                        <Notifications sx={{fontSize: "25px", color: "black"}} />
-                        <Help sx={{fontSize: "25px", color: "black"}} />
-
-                        <FormControl variant="standard">
-                            <Select
-                                sx={{
-                                    backgroundColor: "white",
-                                    width: "150px",
-                                    borderRadius: "0.25rem",
-                                    p: "0.25rem 1rem",
-                                    ".MuiSvgIcon-root": {
-                                        pr: "0.25rem",
-                                        width: "3rem"
-                                    },
-                                    ".MuiSelect-select:focus": {
-                                        backgroundColor: "yellow"
-                                    }
-                                }}
-                                input={<InputBase />}
-                            >
-                                <MenuItem >
-                                    <Typography>{fullName}</Typography>
-                                </MenuItem>
-                                <MenuItem onClick={handleAuthAction}>
-                                    {fullName === "Guest" ? "Log In" : "Log Out"}
-                                </MenuItem>
-                            </Select>
-                        </FormControl>
-                    </FlexBetween> 
-                </Box>
+                </FlexBetween>
             )}
         </FlexBetween>
     )
