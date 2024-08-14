@@ -16,7 +16,7 @@ const LoginPage = () => {
             <Box 
                 width="100%" 
                 backgroundColor="white"
-                p="1rem 6%"
+                p="1rem"
                 textAlign="center"
                 sx={{
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)"

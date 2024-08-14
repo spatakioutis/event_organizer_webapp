@@ -55,7 +55,7 @@ const Form = () => {
     const [pageType, setPageType] = useState("login")
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    
+
     const isNonMobile = useMediaQuery("(min-width:600px)")
     const isLogin = (pageType === "login")
     const isRegister = (pageType === "register")
@@ -74,14 +74,15 @@ const Form = () => {
 
 
 
-    const handleFormSubmit = async(values, onSubmitProps) => {
-        if (isLogin) {
-            await login(values, onSubmitProps)
-        }
-        else {
-            await register(values, onSubmitProps)
-        }
-    };
+    const handleFormSubmit = (values, onSubmitProps) => {
+        // if (isLogin) {
+        //     await login(values, onSubmitProps)
+        // }
+        // else {
+        //     await register(values, onSubmitProps)
+        // }
+        console.log(values)
+    }
 
 
     return (
@@ -179,7 +180,7 @@ const Form = () => {
                                             acceptedFiles=".jpg,.jpeg,.png"
                                             multiple={false}
                                             onDrop={(acceptedFiles) => {
-                                                setFieldValue("picture", acceptedFiles[0])
+                                                setFieldValue("profilePic", acceptedFiles[0])
                                             }}
                                         >
                                             {
@@ -198,16 +199,16 @@ const Form = () => {
                                                     >
                                                         <input {...getInputProps()} />
 
-                                                        {!values.picture ? (
+                                                        {!values.profilePic ? (
                                                             <p>
                                                                 Add Picture Here
                                                             </p>
                                                         ) : (
                                                             <FlexBetween>
                                                                 <Typography>
-                                                                    {values.picture.name}
+                                                                    {values.profilePic.name}
                                                                 </Typography>
-                                                                <EditOutlinedIcon />
+                                                                {/* <EditOutlinedIcon /> */}
                                                             </FlexBetween>
                                                         )}
                                                     </Box>
@@ -220,7 +221,7 @@ const Form = () => {
 
                             {/* both for login/register */}
                             <TextField 
-                                label="Userame"
+                                label="Username"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                                 value={values.username}
@@ -265,8 +266,15 @@ const Form = () => {
                                 
                                 <Typography
                                     onClick={() => {
-                                        setPageType(isLogin ? "register" : "login")
-                                        resetForm()
+                                        setPageType((prevState) => {
+                                            const newPageType = (prevState === "login" ? "register" : "login")
+                                            if (newPageType === "login") {
+                                                resetForm({ values: initialValuesLogin })
+                                            } else {
+                                                resetForm({ values: initialValuesRegister })
+                                            }
+                                            return newPageType
+                                        })
                                     }}
                                     sx={{
                                         textDecoration: "underline",
