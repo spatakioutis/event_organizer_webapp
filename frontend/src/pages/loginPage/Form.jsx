@@ -6,7 +6,7 @@ import {
     useMediaQuery,
     Typography
 } from "@mui/material"
-import { EditOutlined } from "@mui/icons-material";
+import { EditOutlinedIcon } from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -171,33 +171,42 @@ const Form = () => {
                                         p="1rem"
                                     >
                                         <Dropzone
-                                            acceptedFiles=".jpg, .jpeg, .png"
+                                            acceptedFiles=".jpg,.jpeg,.png"
                                             multiple={false}
                                             onDrop={(acceptedFiles) => 
                                                 setFieldValue("picture", acceptedFiles[0])
                                             }
                                         >
                                             {
-                                                ({getRootProps, getInputProps}) => {
+                                                ({getRootProps, getInputProps}) => (
                                                     <Box
+                                                        color="black"
                                                         {...getRootProps()}
-                                                        border={"2px dashed black"}
+                                                        border={"2px dashed #9b59b6"}
                                                         p="1rem"
-                                                        sx={{ "&hover": { cursor: "pointer"} }}
+                                                        sx={{ 
+                                                            "&:hover": { 
+                                                                cursor: "pointer",
+                                                                border: "2px dashed #BFA0C1"
+                                                            } 
+                                                        }}
                                                     >
-                                                        <input {...getInputProps()}/>
+                                                        <input {...getInputProps()} />
+
                                                         {!values.picture ? (
-                                                            <p>Add Picture Here</p>
+                                                            <p>
+                                                                Add Picture Here
+                                                            </p>
                                                         ) : (  
                                                             <FlexBetween>
                                                                 <Typography>
                                                                     {values.picture.name}
                                                                 </Typography>
-                                                                <EditOutlinedIcon/>
+                                                                <EditOutlinedIcon />
                                                             </FlexBetween>
                                                         )}
                                                     </Box>
-                                                }
+                                                )
                                             }
                                         </Dropzone>
                                     </Box>
@@ -228,7 +237,7 @@ const Form = () => {
                             />
                             
                             {/* buttons */}
-                            <Box>
+                            <Box sx={{ gridColumn: "span 4" }}>
                                 
                                 <Button
                                     fullWidth
@@ -242,7 +251,8 @@ const Form = () => {
                                             color: "white",
                                             border: "1px solid #ccc",
                                             backgroundColor: "#9b59b6"
-                                        }
+                                        },
+                                        gridColumn: "span 4"
                                     }}
                                 >
                                     {isLogin ? "LOGIN" : "REGISTER"}
@@ -256,9 +266,9 @@ const Form = () => {
                                     sx={{
                                         textDecoration: "underline",
                                         color: "black",
-                                        "&hover": {
+                                        "&:hover": {
                                             cursor: "pointer",
-                                            color: "white",
+                                            color: "#6d6d6d",
                                         }
                                     }}
                                 >

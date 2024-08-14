@@ -17,6 +17,10 @@ const LoginPage = () => {
                 width="100%" 
                 backgroundColor="white"
                 p="1rem 6%"
+                textAlign="center"
+                sx={{
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)"
+                }}
             >
                 <Typography
                     fontWeight="bold"
@@ -29,17 +33,20 @@ const LoginPage = () => {
 
             {/* form box */}
             <Box
-                width="50%"
+                width={isNonMobileScreens ? "50%" : "93%"}
                 p="2rem"
                 m="2rem auto"
                 borderRadius="1.5rem"
                 backgroundColor="white"
+                sx={{
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)"
+                }}
             >
                 <Typography
                     fontWeight="500"
                     variant="h5"
                     color="black"
-                    sx={{ mb: "1.5rem"}}
+                    sx={{ mb: "1.5rem", textAlign: "center" }}
                 >
                     Welcome to more.com, the Social Media to manage and book events!
                 </Typography>

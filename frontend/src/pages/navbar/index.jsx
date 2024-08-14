@@ -46,7 +46,13 @@ const Navbar = () => {
     }));
 
     return (
-        <FlexBetween padding="1rem 6%" backgroundColor="white">
+        <FlexBetween 
+            padding="1rem 6%" 
+            backgroundColor="white"
+            sx={{
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)"
+            }}
+        >
             <FlexBetween gap="1.75rem">
                 <Typography
                     fontWeight="bold"
