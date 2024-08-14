@@ -87,22 +87,22 @@ const Navbar = () => {
                         <StyledTab
                             label="Movies"
                             component={Link}
-                            to="/movies"
+                            to="/events/Movies"
                         />
                         <StyledTab
                             label="Theater"
                             component={Link}
-                            to="/theater"
+                            to="/events/Theater"
                         />
                         <StyledTab
                             label="Music"
                             component={Link}
-                            to="/music"
+                            to="events/Music"
                         />
                         <StyledTab
                             label="Sports"
                             component={Link}
-                            to="/sports"
+                            to="/events/Sports"
                         />
                     </Tabs>
 
