@@ -12,7 +12,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../state";
-import Dropzone from "react-dropzone";
+import Dropzone from 'react-dropzone';
 import FlexBetween from "../../components/FlexBetween";
 
 
@@ -83,6 +83,7 @@ const Form = () => {
         }
     };
 
+
     return (
         
         <Formik
@@ -145,7 +146,8 @@ const Form = () => {
                                         sx={{ gridColumn: "span 2" }}
                                     />
                                     <TextField 
-                                        label="Birth Date"
+                                        label="Birth Date"  
+                                        type="date"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         value={values.birthDate}
@@ -153,6 +155,9 @@ const Form = () => {
                                         error={Boolean(touched.birthDate) && Boolean(errors.birthDate)}
                                         helperText={touched.birthDate && errors.birthDate}
                                         sx={{ gridColumn: "span 2" }}
+                                        InputLabelProps={{
+                                            shrink: true
+                                        }}
                                     />
                                     <TextField 
                                         label="Email"
@@ -173,9 +178,9 @@ const Form = () => {
                                         <Dropzone
                                             acceptedFiles=".jpg,.jpeg,.png"
                                             multiple={false}
-                                            onDrop={(acceptedFiles) => 
+                                            onDrop={(acceptedFiles) => {
                                                 setFieldValue("picture", acceptedFiles[0])
-                                            }
+                                            }}
                                         >
                                             {
                                                 ({getRootProps, getInputProps}) => (
@@ -197,7 +202,7 @@ const Form = () => {
                                                             <p>
                                                                 Add Picture Here
                                                             </p>
-                                                        ) : (  
+                                                        ) : (
                                                             <FlexBetween>
                                                                 <Typography>
                                                                     {values.picture.name}
@@ -226,7 +231,7 @@ const Form = () => {
                             />
                             <TextField 
                                 label="Password"
-                                type="password "
+                                type="password"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                                 value={values.password}
