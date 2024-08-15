@@ -7,7 +7,7 @@ const verifyToken = async (req, res, next) => {
         let token = req.header("Authorization")
 
         if ( !token ) {
-            return res.status(400).json({
+            return res.status(401).json({
                 message: "Access denied. No token provided"
             })
         }
@@ -20,7 +20,7 @@ const verifyToken = async (req, res, next) => {
         const verified = jwt.verify(token, process.env.JWT_KEY)
 
         if ( !verified ) {
-            return res.status(400).json({
+            return res.status(401).json({
                 message: "Access denied. Invalid token"
             })
         }

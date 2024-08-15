@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../state";
 import Dropzone from 'react-dropzone';
 import FlexBetween from "../../components/FlexBetween";
-
+import axios from 'axios';
 
 // schemas
 const registerSchema = yup.object().shape({
@@ -60,27 +60,68 @@ const Form = () => {
     const isLogin = (pageType === "login")
     const isRegister = (pageType === "register")
 
-    // const register = async(values, onSubmitProps) => {  background
+    // create user
+    const register = async (values, onSubmitProps) => {
         
-    //     // to send info with image
-    //     const formData = new FormData()
-    //     for (let value in values) {
-    //         formData.append(value, values[value])
-    //     }
-    //     formData.append('picturePath', values.picture.name)
+        // to send info with image
+        const formData = new FormData()
+        for (let value in values) {
+            formData.append(value, values[value])
+        }
+        formData.append('picturePath', values.picture.name)
 
-    //     const savedUserResponse
-    // }
+        try {
+            const { data: savedUser } = await axios.post(
+                "http://localhost:3001/auth/register",
+                formData
+            )
+            onSubmitProps.resetForm()
 
+            if(savedUser) {
+                setPageType("login")
+            }
+        }
+        catch(error) {
+            console.error("Error during registration:", error);
+        }
+    }
 
+    // login user
+    const login = async (values, onSubmitProps) => {
 
-    const handleFormSubmit = (values, onSubmitProps) => {
-        // if (isLogin) {
-        //     await login(values, onSubmitProps)
-        // }
-        // else {
-        //     await register(values, onSubmitProps)
-        // }
+        try {
+            const { data: loggedIn } = await axios.post(
+                "http://localhost:3001/auth/login",
+                values,
+                {
+                    headers: { "Content-Type": "application/json" }
+                }
+            )
+            onSubmitProps.resetForm()
+
+            if (loggedIn) {
+                dispatch(
+                    setLogin({
+                        user: loggedIn.user,
+                        token: loggedIn.token
+                    })
+                )
+                navigate("/home")
+            }
+        }
+        catch(error) {
+            console.error("Error during login:", error);
+        }
+    }
+
+    // handle register/login
+    const handleFormSubmit = async (values, onSubmitProps) => {
+        if (isLogin) {
+            await login(values, onSubmitProps)
+        }
+        else {
+            await register(values, onSubmitProps)
+        }
         console.log(values)
     }
 
