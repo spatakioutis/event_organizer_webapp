@@ -68,7 +68,7 @@ const Form = () => {
         for (let value in values) {
             formData.append(value, values[value])
         }
-        formData.append('picturePath', values.picture.name)
+        formData.append('profilePic', values.profilePic.name)
 
         try {
             const { data: savedUser } = await axios.post(
@@ -122,7 +122,6 @@ const Form = () => {
         else {
             await register(values, onSubmitProps)
         }
-        console.log(values)
     }
 
 
