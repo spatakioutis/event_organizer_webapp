@@ -84,197 +84,202 @@ const MyAccount = () => {
     }
 
     return (
-        <FlexBetween direction="column" gap="20px">
+        <Box
+            display="grid"
+            gridTemplateRows="2"
+            gap="15px"
+        >
             <Typography
-                marginLeft="-420px"
                 color="black"
                 fontWeight="bold"
                 fontSize="1.3rem"
             >
                 Account Details
             </Typography>
-            <FlexBetween gap="10px">
-                <Formik
-                    onSubmit={handleFormSubmit}
-                    initialValues={initialFormValues}
-                    validationSchema={validationSchema}
-                >
-                    {
-                        ({
-                            values,
-                            errors,
-                            touched,
-                            handleBlur,
-                            handleChange,
-                            handleSubmit,
-                            setFieldValue,
-                            resetForm
-                        }) => (
-                            <form onSubmit={handleSubmit}>
-                                <Box
-                                    display="grid"
-                                    gap="30px"
-                                    gridTemplateColumns="repeat(4, 1fr)"
-                                    maxWidth="580px"
-                                    sx = {{
-                                        "& > div": {gridColumn: isNonMobile ? undefined : "span 4"}
-                                    }}
-                                >
-                                    <Box sx={{ gridColumn: "span 1"}}>
-                                        <UserImage 
-                                            image={user.profilePic} 
-                                            size="120px" 
-                                        />
-                                    </Box>
+            <Box>
+                <FlexBetween gap="10px">
+                    <Formik
+                        onSubmit={handleFormSubmit}
+                        initialValues={initialFormValues}
+                        validationSchema={validationSchema}
+                    >
+                        {
+                            ({
+                                values,
+                                errors,
+                                touched,
+                                handleBlur,
+                                handleChange,
+                                handleSubmit,
+                                setFieldValue,
+                                resetForm
+                            }) => (
+                                <form onSubmit={handleSubmit}>
                                     <Box
-                                        gridColumn="span 3"
-                                        border={"1px solid grey"}
-                                        borderRadius="5px"
-                                        p="1rem"
+                                        display="grid"
+                                        gap="30px"
+                                        gridTemplateColumns="repeat(4, 1fr)"
+                                        maxWidth="580px"
+                                        sx = {{
+                                            "& > div": {gridColumn: isNonMobile ? undefined : "span 4"}
+                                        }}
                                     >
-                                        <Dropzone
-                                            acceptedFiles=".jpg,.jpeg,.png"
-                                            multiple={false}
-                                            onDrop={(acceptedFiles) => {
-                                                setFieldValue("profilePic", acceptedFiles[0])
-                                            }}
+                                        <Box sx={{ gridColumn: "span 1"}}>
+                                            <UserImage 
+                                                image={user.profilePic} 
+                                                size="120px" 
+                                            />
+                                        </Box>
+                                        <Box
+                                            gridColumn="span 3"
+                                            border={"1px solid grey"}
+                                            borderRadius="5px"
+                                            p="1rem"
                                         >
-                                            {
-                                                ({getRootProps, getInputProps}) => (
-                                                    <Box
-                                                        color="black"
-                                                        {...getRootProps()}
-                                                        border={"2px dashed #9b59b6"}
-                                                        p="1rem"
-                                                        sx={{ 
-                                                            "&:hover": { 
-                                                                cursor: "pointer",
-                                                                border: "2px dashed #BFA0C1"
-                                                            } 
-                                                        }}
-                                                    >
-                                                        <input {...getInputProps()} />
+                                            <Dropzone
+                                                acceptedFiles=".jpg,.jpeg,.png"
+                                                multiple={false}
+                                                onDrop={(acceptedFiles) => {
+                                                    setFieldValue("profilePic", acceptedFiles[0])
+                                                }}
+                                            >
+                                                {
+                                                    ({getRootProps, getInputProps}) => (
+                                                        <Box
+                                                            color="black"
+                                                            {...getRootProps()}
+                                                            border={"2px dashed #9b59b6"}
+                                                            p="1rem"
+                                                            sx={{ 
+                                                                "&:hover": { 
+                                                                    cursor: "pointer",
+                                                                    border: "2px dashed #BFA0C1"
+                                                                } 
+                                                            }}
+                                                        >
+                                                            <input {...getInputProps()} />
 
-                                                        {!values.profilePic ? (
-                                                            <p style={{textAlign: "center"}}>
-                                                                Add new profile picture here
-                                                            </p>
-                                                        ) : (
-                                                            <FlexBetween>
-                                                                <Typography>
-                                                                    {values.profilePic.name}
-                                                                </Typography>
-                                                            </FlexBetween>
-                                                        )}
-                                                    </Box>
-                                                )
-                                            }
-                                        </Dropzone>
-                                    </Box>
-                                    <TextField 
-                                        label="First Name"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        value={values.firstName}
-                                        name="firstName"
-                                        error={Boolean(touched.firstName) && Boolean(errors.firstName)}
-                                        helperText={touched.firstName && errors.firstName}
-                                        sx={{ gridColumn: "span 2"}}
-                                    />
-                                    <TextField 
-                                        label="Last Name"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        value={values.lastName}
-                                        name="lastName"
-                                        error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                                        helperText={touched.lastName && errors.lastName}
-                                        sx={{gridColumn: "span 2"}}
-                                    />
-                                    <TextField 
-                                        label="Username"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        value={values.username}
-                                        name="username"
-                                        error={Boolean(touched.username) && Boolean(errors.username)}
-                                        helperText={touched.username && errors.username}
-                                        sx={{ gridColumn: "span 2" }}
-                                    />
-                                    <TextField 
-                                        label="Phone"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        value={values.phone}
-                                        name="phone"
-                                        error={Boolean(touched.phone) && Boolean(errors.phone)}
-                                        helperText={touched.phone && errors.phone}
-                                        sx={{ gridColumn: "span 2" }}
-                                    />
-                                    <TextField 
-                                        label="Email"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        value={values.email}
-                                        name="email"
-                                        error={Boolean(touched.email) && Boolean(errors.email)}
-                                        helperText={touched.email && errors.email}
-                                        sx={{ gridColumn: "span 4" }}
-                                    />
-                                    
-
-                                    {/* error message */}
-                                    {errorMessage && (
-                                        <Typography
-                                            color="red"
-                                            fontWeight="bold"
+                                                            {!values.profilePic ? (
+                                                                <p style={{textAlign: "center"}}>
+                                                                    Add new profile picture here
+                                                                </p>
+                                                            ) : (
+                                                                <FlexBetween>
+                                                                    <Typography>
+                                                                        {values.profilePic.name}
+                                                                    </Typography>
+                                                                </FlexBetween>
+                                                            )}
+                                                        </Box>
+                                                    )
+                                                }
+                                            </Dropzone>
+                                        </Box>
+                                        <TextField 
+                                            label="First Name"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            value={values.firstName}
+                                            name="firstName"
+                                            error={Boolean(touched.firstName) && Boolean(errors.firstName)}
+                                            helperText={touched.firstName && errors.firstName}
+                                            sx={{ gridColumn: "span 2"}}
+                                        />
+                                        <TextField 
+                                            label="Last Name"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            value={values.lastName}
+                                            name="lastName"
+                                            error={Boolean(touched.lastName) && Boolean(errors.lastName)}
+                                            helperText={touched.lastName && errors.lastName}
+                                            sx={{gridColumn: "span 2"}}
+                                        />
+                                        <TextField 
+                                            label="Username"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            value={values.username}
+                                            name="username"
+                                            error={Boolean(touched.username) && Boolean(errors.username)}
+                                            helperText={touched.username && errors.username}
+                                            sx={{ gridColumn: "span 2" }}
+                                        />
+                                        <TextField 
+                                            label="Phone"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            value={values.phone}
+                                            name="phone"
+                                            error={Boolean(touched.phone) && Boolean(errors.phone)}
+                                            helperText={touched.phone && errors.phone}
+                                            sx={{ gridColumn: "span 2" }}
+                                        />
+                                        <TextField 
+                                            label="Email"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            value={values.email}
+                                            name="email"
+                                            error={Boolean(touched.email) && Boolean(errors.email)}
+                                            helperText={touched.email && errors.email}
                                             sx={{ gridColumn: "span 4" }}
-                                            maxWidth="100%"
-                                        >
-                                            {errorMessage}
-                                        </Typography>
-                                    )}
+                                        />
+                                        
 
-                                    {successMessage && (
-                                        <Typography
-                                            color="green"
-                                            fontWeight="bold"
-                                            sx={{ gridColumn: "span 4" }}
-                                        >
-                                            {successMessage}
-                                        </Typography>
-                                    )}
+                                        {/* error message */}
+                                        {errorMessage && (
+                                            <Typography
+                                                color="red"
+                                                fontWeight="bold"
+                                                sx={{ gridColumn: "span 4" }}
+                                                maxWidth="100%"
+                                            >
+                                                {errorMessage}
+                                            </Typography>
+                                        )}
 
-                                    {/* buttons */}
-                                    <Box sx={{ gridColumn: "span 4" }}>   
-                                        <Button
-                                            fullWidth
-                                            type="submit"
-                                            sx={{
-                                                m: "0",
-                                                p: "1rem",
-                                                backgroundColor: "#800080",
-                                                color: "white",
-                                                "&:hover" : { 
+                                        {successMessage && (
+                                            <Typography
+                                                color="green"
+                                                fontWeight="bold"
+                                                sx={{ gridColumn: "span 4" }}
+                                            >
+                                                {successMessage}
+                                            </Typography>
+                                        )}
+
+                                        {/* buttons */}
+                                        <Box sx={{ gridColumn: "span 4" }}>   
+                                            <Button
+                                                fullWidth
+                                                type="submit"
+                                                sx={{
+                                                    m: "0",
+                                                    p: "1rem",
+                                                    backgroundColor: "#800080",
                                                     color: "white",
-                                                    border: "1px solid #ccc",
-                                                    backgroundColor: "#9b59b6"
-                                                },
-                                                gridColumn: "span 4"
-                                            }}
-                                        >
-                                            Save Changes
-                                        </Button>
+                                                    "&:hover" : { 
+                                                        color: "white",
+                                                        border: "1px solid #ccc",
+                                                        backgroundColor: "#9b59b6"
+                                                    },
+                                                    gridColumn: "span 4"
+                                                }}
+                                            >
+                                                Save Changes
+                                            </Button>
+                                        </Box>
+                                    
                                     </Box>
-                                
-                                </Box>
-                            </form>
-                        ) 
-                    } 
+                                </form>
+                            ) 
+                        } 
 
-                </Formik>
-            </FlexBetween>
-        </FlexBetween>
+                    </Formik>
+                </FlexBetween>
+            </Box>
+        </Box>
     )
 }
 
