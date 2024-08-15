@@ -12,7 +12,7 @@ const changeUserInfo = async (req, res) => {
 
         // get data
         const userID = req.user.id
-        const { updates } = req.body
+        const updates = req.body
 
         if (req.file) {
             const imagePath = req.file.path.replace('public/', '')
@@ -34,6 +34,11 @@ const changeUserInfo = async (req, res) => {
         })
     }
     catch (error) {
+        if (error.code == 11000) {
+            return res.status(400).json({
+                message: 'Username already exists'
+            })
+        }
         res.status(500).json({
             message: error.message
         })

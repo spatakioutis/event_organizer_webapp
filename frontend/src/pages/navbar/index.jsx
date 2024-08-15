@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { setLogout } from "../../state"
 import { useNavigate, Link } from "react-router-dom"
 import FlexBetween from "../../components/FlexBetween"
+import UserImage from "../../components/UserImage"
 
 const Navbar = () => {
     const dispatch = useDispatch()
@@ -29,15 +30,7 @@ const Navbar = () => {
     const user = useSelector((state) => state.user)
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)")
 
-    const fullName = user ? `${user.firstName} ${user.lastName}` : "Guest"
-    
-    const handleAuthAction = () => {
-        if (fullName === "Guest") {
-            navigate("/login")
-        } else {
-            dispatch(setLogout())
-        }
-    }
+    const fullName = `${user.firstName} ${user.lastName}`
 
     const StyledTab = styled(Tab)(({ theme }) => ({
         '&:hover': {
@@ -139,6 +132,7 @@ const Navbar = () => {
                             input={<InputBase />}
                         >
                             <MenuItem
+                                onClick={() => navigate(`/profile/${user._id}`)}
                                 value={fullName}
                                 style={{
                                     minWidth: '150px',
@@ -147,11 +141,15 @@ const Navbar = () => {
                             >
                                 <Typography>{fullName}</Typography>
                             </MenuItem>
-                            <MenuItem onClick={handleAuthAction}>
-                                {fullName === "Guest" ? "Log In" : "Log Out"}
+                            <MenuItem onClick={() => {
+                                dispatch(setLogout())
+                                navigate('/login')
+                            }}>
+                                Log Out
                             </MenuItem>
                         </Select>
                     </FormControl>
+                    <UserImage image={user.profilePic} />
                 </FlexBetween>
             )}
         </FlexBetween>

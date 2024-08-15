@@ -201,7 +201,16 @@ const Form = () => {
                                         name="birthDate"
                                         error={Boolean(touched.birthDate) && Boolean(errors.birthDate)}
                                         helperText={touched.birthDate && errors.birthDate}
-                                        sx={{ gridColumn: "span 2" }}
+                                        sx={{ gridColumn: "span 2",
+                                            '& input::-webkit-calendar-picker-indicator': {
+                                                filter: 'invert(1)',
+                                                cursor: 'pointer'
+                                            },
+                                            '& input[type="date"]::-webkit-calendar-picker-indicator': {
+                                                filter: 'invert(1)',
+                                                cursor: 'pointer'
+                                            }
+                                         }}
                                         InputLabelProps={{
                                             shrink: true
                                         }}

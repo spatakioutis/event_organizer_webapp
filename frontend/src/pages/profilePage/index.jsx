@@ -1,8 +1,13 @@
+import Navbar from "../navbar"
+import MyAccount from "./MyAccount"
+
 const ProfilePage = () => {
     return (
-        <div>
-            profilepage
-        </div>)
+    <>
+        <Navbar />
+        <MyAccount />
+    </>
+    )
 }
 
 export default ProfilePage
