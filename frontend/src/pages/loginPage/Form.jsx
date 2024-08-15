@@ -53,6 +53,7 @@ const initialValuesLogin = {
 // form component
 const Form = () => {
     const [pageType, setPageType] = useState("login")
+    const [errorMessage, setErrorMessage] = useState("")
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -65,10 +66,13 @@ const Form = () => {
         
         // to send info with image
         const formData = new FormData()
-        for (let value in values) {
-            formData.append(value, values[value])
+        for (let key in values) {
+            if (key === "profilePic" && values.profilePic) {
+                formData.append("image", values.profilePic)
+            } else {
+                formData.append(key, values[key])
+            }
         }
-        formData.append('profilePic', values.profilePic.name)
 
         try {
             const { data: savedUser } = await axios.post(
@@ -82,7 +86,8 @@ const Form = () => {
             }
         }
         catch(error) {
-            console.error("Error during registration:", error);
+            console.error("Error during registration:", error)
+            setErrorMessage(error.response.data.message)
         }
     }
 
@@ -110,7 +115,8 @@ const Form = () => {
             }
         }
         catch(error) {
-            console.error("Error during login:", error);
+            console.error("Error during login:", error)
+            setErrorMessage(error.response.data.message)
         }
     }
 
@@ -282,6 +288,16 @@ const Form = () => {
                                 sx={{ gridColumn: "span 4" }}
                             />
                             
+                            {/* error message */}
+                            {errorMessage && (
+                                <Typography
+                                    color="red"
+                                    fontWeight="bold"
+                                >
+                                    {errorMessage}
+                                </Typography>
+                            )}
+
                             {/* buttons */}
                             <Box sx={{ gridColumn: "span 4" }}>
                                 

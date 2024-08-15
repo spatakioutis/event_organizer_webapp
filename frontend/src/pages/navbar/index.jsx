@@ -29,21 +29,21 @@ const Navbar = () => {
     const user = useSelector((state) => state.user)
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)")
 
-    const fullName = user ? `${user.firstName} ${user.lastName}` : "Guest";
+    const fullName = user ? `${user.firstName} ${user.lastName}` : "Guest"
     
     const handleAuthAction = () => {
         if (fullName === "Guest") {
-            navigate("/login");
+            navigate("/login")
         } else {
-            dispatch(setLogout());
+            dispatch(setLogout())
         }
-    };
+    }
 
     const StyledTab = styled(Tab)(({ theme }) => ({
         '&:hover': {
             backgroundColor: "#f0f0f0",
         },
-    }));
+    }))
 
     return (
         <FlexBetween 
@@ -112,9 +112,16 @@ const Navbar = () => {
                         />
                     </Tabs>
 
-                    <FormControl variant="standard" value={fullName}>
+                    <FormControl 
+                        variant="standard" 
+                        value={fullName}
+                    >
                         <Select
                             value={fullName}
+                            style={{
+                                minWidth: '150px',
+                                width: 'auto'
+                            }}
                             sx={{
                                 border: "1px solid #ccc",
                                 backgroundColor: "#f0f0f0",
@@ -131,7 +138,13 @@ const Navbar = () => {
                             }}
                             input={<InputBase />}
                         >
-                            <MenuItem value={fullName}>
+                            <MenuItem
+                                value={fullName}
+                                style={{
+                                    minWidth: '150px',
+                                    width: 'auto'
+                                }}
+                            >
                                 <Typography>{fullName}</Typography>
                             </MenuItem>
                             <MenuItem onClick={handleAuthAction}>
