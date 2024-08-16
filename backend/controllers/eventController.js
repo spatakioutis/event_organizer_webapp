@@ -62,7 +62,6 @@ const deleteEvent = async (req, res) => {
 
         // get event
         const userID = req.user.id
-        console.log(req.params)
         const eventID = req.params.id
         const event = await Event.findById(eventID)
 
@@ -222,6 +221,34 @@ const getEventsByType = async (req, res) => {
     }
 }
 
+const getEventsByHost = async (req, res) => {
+    
+    try {
+
+        //get host id
+        console.log(req)
+        const hostId = req.user.id
+
+        // get events by this host
+        const eventsByHost = await Event.find({ host: hostId })
+        if (!eventsByHost.length) {
+            return res.status(404).json({
+                message: "No events found for this host."
+            })
+        }
+
+        res.status(200).json({
+            message: "Events found by host successfully",
+            events: eventsByHost
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
 const getEventsByNewest = async (req, res) => {
     try {
         // get events
@@ -256,4 +283,4 @@ const getEventsByNewest = async (req, res) => {
     }
 }
 
-export { createEvent, deleteEvent, updateEvent, getSingleEvent, getEventsByType, getEventsByNewest }
+export { createEvent, deleteEvent, updateEvent, getSingleEvent, getEventsByType, getEventsByHost, getEventsByNewest }
