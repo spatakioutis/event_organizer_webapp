@@ -12,7 +12,7 @@ import { Formik } from "formik"
 import * as yup from "yup"
 import axios from 'axios'
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setLogout } from "../../state"
 import { useNavigate } from "react-router-dom"
 
@@ -24,7 +24,6 @@ const changePasswordSchema = yup.object().shape({
 const deleteAccountSchema = yup.object().shape({
     password: yup.string().required("This field is required")
 })
-
 const initialValuesChangePassword = {
     oldPassword: "",
     newPassword: ""
@@ -34,9 +33,11 @@ const initialValuesDeleteAccount = {
     password: ""
 }
 
+
 const AccountSettings = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const token = useSelector((state) => state.token)
     const [selectedTab, setSelectedTab] = useState(0)
     const [errorMessage, setErrorMessage] = useState("")
     const isNonMobile = useMediaQuery("(min-width: 1000px)")
@@ -46,24 +47,55 @@ const AccountSettings = () => {
         setErrorMessage("")
     }
 
-    const changePassword = (values, onSubmitProps) => {
-        setErrorMessage("API call not implemented yet")
+    const changePassword = async (values, onSubmitProps) => {
+        try {
+            const response = await axios.put(
+                "http://localhost:3001/users/password",
+                {
+                    oldPassword: values.oldPassword,
+                    newPassword: values.newPassword
+                },
+                {
+                    headers: { "Authorization": `Bearer ${token}`}
+                }
+            )
+            console.log(response)
+            onSubmitProps.resetForm()
+            navigate('/login')
+            dispatch(setLogout())
+        }
+        catch (error) {
+            console.error("Error while trying to change password: ", error)
+            setErrorMessage(error.response.data.error)
+        }
     }
 
-    const deleteAccount = (values, onSubmitProps) => {
-        setErrorMessage("API call not implemented yet")
+    const deleteAccount = async (values, onSubmitProps) => {
+        try {
+            const response = await axios.delete(
+                `http://localhost:3001/users?password=${values.password}`,
+                {
+                    headers: { "Authorization": `Bearer ${token}`}
+                }
+            )
+            console.log(response)
+            onSubmitProps.resetForm()
+            navigate('/login')
+            dispatch(setLogout())
+        }
+        catch (error) {
+            console.error("Error while trying to delete account: ", error)
+            setErrorMessage(error.response.data.error)
+        }
     }
 
-    const handleFormSubmit = (values, onSubmitProps) => {
+    const handleFormSubmit = async (values, onSubmitProps) => {
         if (selectedTab === 0) {
-            changePassword()
+            await changePassword(values, onSubmitProps)
         }
         else if (selectedTab === 1) {
-            deleteAccount()
+            deleteAccount(values, onSubmitProps)
         }
-        onSubmitProps.resetForm()
-        // dispatch(setLogout())
-        // navigate('/login')
     }
     
     return (
@@ -130,13 +162,12 @@ const AccountSettings = () => {
                                     <Box
                                         display="grid"
                                         gap="20px"
-                                        gridTemplateRows="4"
+                                        gridTemplateRows="3"
                                         maxWidth="580px"
                                         sx = {{
                                             "& > div": {gridColumn: isNonMobile ? undefined : "span 4"}
                                         }}
                                     >
-                                
                                         <TextField 
                                             label="Old Password"
                                             type="password"
@@ -197,7 +228,7 @@ const AccountSettings = () => {
                                     <Box
                                         display="grid"
                                         gap="20px"
-                                        gridTemplateRows="3"
+                                        gridTemplateRows="2"
                                         maxWidth="580px"
                                         sx = {{
                                             "& > div": {gridColumn: isNonMobile ? undefined : "span 4"}

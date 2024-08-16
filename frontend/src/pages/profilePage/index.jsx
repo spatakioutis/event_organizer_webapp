@@ -8,6 +8,7 @@ import {
 import { useState } from "react"
 import Navbar from "../navbar"
 import MyAccount from "./MyAccount"
+import MyEvents from "./MyEvents"
 import AccountSettings from "./AccountSettings"
 
 const ProfilePage = () => {
@@ -65,6 +66,7 @@ const ProfilePage = () => {
                 </Box>
                 <Box>
                     {selectedTab === 0 && <MyAccount />}
+                    {selectedTab === 2 && <MyEvents />}
                     {selectedTab === 3 && <AccountSettings />}
                 </Box>
             </Box>

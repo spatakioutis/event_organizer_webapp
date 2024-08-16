@@ -46,6 +46,7 @@ const changeUserInfo = async (req, res) => {
 }
 
 const changePassword = async (req, res) => {
+    console.log(req.body)
     const {oldPassword, newPassword} = req.body
     const userID = req.user.id
 
