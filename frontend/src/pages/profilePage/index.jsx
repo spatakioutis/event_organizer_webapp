@@ -10,6 +10,7 @@ import Navbar from "../navbar"
 import MyAccount from "./MyAccount"
 import MyEvents from "./MyEvents"
 import AccountSettings from "./AccountSettings"
+import MyBookings from "./MyBookings"
 
 const ProfilePage = () => {
     
@@ -38,7 +39,7 @@ const ProfilePage = () => {
         >
             <Box 
                 padding="2rem"
-                width="65%"
+                width="75%"
                 display="grid"
                 gridTemplateColumns="1fr 4fr"
                 gap="50px" 
@@ -67,6 +68,7 @@ const ProfilePage = () => {
                 </Box>
                 <Box>
                     {selectedTab === 0 && <MyAccount />}
+                    {selectedTab === 1 && <MyBookings />}
                     {selectedTab === 2 && <MyEvents />}
                     {selectedTab === 3 && <AccountSettings />}
                 </Box>

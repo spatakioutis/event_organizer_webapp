@@ -89,8 +89,8 @@ const getUserBookings = async (req, res) => {
             if ( (booking.date >= today && bookingsStatus === 'upcoming') || 
                  (booking.date < today && bookingsStatus === 'past') ) {
                 
-                const event = Event.findById(booking.event)
-                
+                const event = await Event.findById(booking.event)
+
                 return {
                     bookingDetails: booking, 
                     image:          event.image, 

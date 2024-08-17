@@ -1,6 +1,7 @@
 import { 
     Box, 
-    Typography
+    Typography,
+    Button
 } from '@mui/material'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
@@ -8,15 +9,31 @@ import axios from 'axios'
 import Navbar from '../navbar'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import FlexBetween from '../../components/FlexBetween'
 import TicketCard from '../../components/ticketCard'
 
 const EventPage = () => {
-
+    const navigate = useNavigate()
+    const user = useSelector((state)=> state.user)
     const token = useSelector((state)=> state.token)
     const [event, setEvent] = useState(null)
     const { eventId } = useParams()
+
+    const deleteEvent = async () => {
+        try {
+            await axios.delete(
+                `http://localhost:3001/events/${eventId}`,
+                {
+                    headers: { "Authorization": `Bearer ${token}`}
+                }
+            )
+            navigate(`/profile/${user._id}`)
+        }
+        catch (error) {
+            console.error("Error while trying to delete event: ", error)
+        }
+    }
 
     const takeFormmatedDate = (dateString) => {
         const date = new Date(dateString)
@@ -94,15 +111,31 @@ const EventPage = () => {
                     gridRow: "span 1"
                 }}
                 padding="10px 20px 0 20px"
-            >
-                <Typography
-                    color="black"
-                    fontWeight="bold"
-                    fontSize="22pt"
-                    sx={{textIndent: "5px"}}
-                >
-                    {event.title}
-                </Typography>
+            >   
+                <FlexBetween>
+                    <Typography
+                        color="black"
+                        fontWeight="bold"
+                        fontSize="22pt"
+                        sx={{textIndent: "5px"}}
+                    >
+                        {event.title}
+                    </Typography>
+                    {event.host._id === user._id &&          
+                    <Button
+                        sx={{
+                            backgroundColor: "rgb(255,0,0)",
+                            color: "white",
+                            "&:hover": {
+                                backgroundColor: "rgb(255,80,80)"
+                            }
+                        }}
+                        onClick={deleteEvent}
+                    >
+                        Delete Event
+                    </Button>}
+                </FlexBetween>
+
                 <Box 
                     display="flex"
                     justifyContent="flex-start"

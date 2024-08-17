@@ -174,6 +174,7 @@ const getSingleEvent = async (req, res) => {
             message: "Event found successfully",
             event,
             user: {
+                _id: host._id,
                 firstName: host.firstName,
                 lastName: host.lastName,
                 username: host.username,

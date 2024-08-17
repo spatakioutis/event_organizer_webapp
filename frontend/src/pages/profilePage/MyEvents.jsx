@@ -47,7 +47,7 @@ const MyEvents = () => {
     })
     
     return (
-        <Box>
+        <Box width="100%">
             <Typography
                 color="black"
                 fontWeight="bold"
@@ -60,7 +60,7 @@ const MyEvents = () => {
                 <Tabs 
                     value={selectedTab} 
                     onChange={handleTabChange} 
-                    aria-label="Account Tabs"
+                    aria-label="Event Tabs"
                     sx={{ marginBottom: "2rem"}}
                     TabIndicatorProps={{
                         style: {
