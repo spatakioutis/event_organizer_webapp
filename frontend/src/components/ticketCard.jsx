@@ -56,7 +56,7 @@ const TicketCard = (props) => {
             )
 
             setErrorMessage("")
-            setSuccessMessage("Tickets booked successfully")
+            setSuccessMessage("Tickets booked successfully!")
             onSubmitProps.resetForm()
         }
         catch(error) {

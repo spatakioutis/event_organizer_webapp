@@ -51,6 +51,19 @@ const EventPage = () => {
         return <div>Loading...</div>; 
     }
 
+    const bookingElements = event.specificDateInfo.map((info) => {
+        return (
+            <TicketCard
+                eventID={eventId}
+                key={info.date}
+                date={info.date}
+                location={info.location}
+                seatsAvailable={info.seatsAvailable}
+                price={event.ticketPrice}
+            />
+        )
+    })
+
     return (<>
         <Navbar />
         <Box 
@@ -209,22 +222,11 @@ const EventPage = () => {
                             <Typography color="black" fontWeight="bold" marginLeft="35px">Number of Tickets</Typography>
                         </Box>
 
-                        <TicketCard
-                            eventID={eventId}
-                            date={event.specificDateInfo[0].date}
-                            location={event.specificDateInfo[0].location}
-                            price={event.ticketPrice}
-                            totalSeats={event.totalSeats}
-                            seatsAvailable={event.seatsAvailable}
-                        />
-                        <TicketCard
-                            eventID={eventId}
-                            date={event.specificDateInfo[1].date}
-                            location={event.specificDateInfo[1].location}
-                            price={event.ticketPrice}
-                            totalSeats={event.totalSeats}
-                            seatsAvailable={event.seatsAvailable}
-                        />
+                        
+
+                        <Box>
+                            {bookingElements}
+                        </Box>
                     </Box>
                     
                 </Box>

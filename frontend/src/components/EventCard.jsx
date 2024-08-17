@@ -2,9 +2,10 @@ import {
     Box, 
     Typography 
 } from "@mui/material"
+import { useNavigate } from "react-router-dom"
 
 const EventCard = ({event}) => {
-
+    const navigate = useNavigate()
     const imagePath = event.image.replace('public\\', '')
     
     const takeFormmatedDate = (dateString) => {
@@ -22,6 +23,7 @@ const EventCard = ({event}) => {
 
     return (
         <Box 
+            onClick={() => navigate(`/events/${event._id}`)}
             width="280px" 
             height="250px"
             display="grid"
