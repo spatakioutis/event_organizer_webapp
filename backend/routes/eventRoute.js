@@ -10,9 +10,9 @@ router.use(verifyToken)
 router.post("/", upload.single('image'), createEvent)
 router.put("/:id", upload.single('image'), updateEvent)
 router.delete("/:id", deleteEvent)
-router.get("/:id", getSingleEvent)
 router.get("/type", getEventsByType)
 router.get("/host", getEventsByHost)
 router.get("/newest", getEventsByNewest)
+router.get("/:id", getSingleEvent)
 
 export default router

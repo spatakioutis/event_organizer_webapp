@@ -224,9 +224,6 @@ const getEventsByType = async (req, res) => {
 const getEventsByHost = async (req, res) => {
     
     try {
-
-        //get host id
-        console.log(req)
         const hostId = req.user.id
 
         // get events by this host
