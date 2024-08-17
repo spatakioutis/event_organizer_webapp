@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
 import HomePage from './pages/homePage'
 import LoginPage from './pages/loginPage'
 import ProfilePage from './pages/profilePage'
+import EventPage from './pages/eventPage'
 
 const App = () => {
 
@@ -23,6 +24,10 @@ const App = () => {
 				<Route 
 					path="/profile/:userId" 
 					element={<ProfilePage />}
+				/>
+				<Route 
+					path="/events/:eventId" 
+					element={<EventPage />}
 				/>
 			</Routes>
 		</BrowserRouter>

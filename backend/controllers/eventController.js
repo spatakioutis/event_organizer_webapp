@@ -168,9 +168,18 @@ const getSingleEvent = async (req, res) => {
             })
         }
 
+        const host = await User.findById(event.host)
+
         res.status(200).json({
             message: "Event found successfully",
-            event
+            event,
+            user: {
+                firstName: host.firstName,
+                lastName: host.lastName,
+                username: host.username,
+                email: host.email,
+                phone: host.phone
+            }
         })
 
     }
@@ -202,6 +211,7 @@ const getEventsByType = async (req, res) => {
             const locations = event.specificDateInfo.map(info => info.location)
 
             return {
+                _id: event._id,
                 title: event.title,
                 image: event.image,
                 dates,
@@ -228,15 +238,30 @@ const getEventsByHost = async (req, res) => {
 
         // get events by this host
         const eventsByHost = await Event.find({ host: hostId })
+                                        .sort({ createdAt: -1 })
         if (!eventsByHost.length) {
             return res.status(404).json({
                 message: "No events found for this host."
             })
         }
 
+        const eventData = eventsByHost.map(event => {
+
+            const dates = event.specificDateInfo.map(info => info.date)
+            const locations = event.specificDateInfo.map(info => info.location)
+
+            return {
+                _id: event._id,
+                title: event.title,
+                image: event.image,
+                dates,
+                locations
+            }
+        })
+
         res.status(200).json({
             message: "Events found by host successfully",
-            events: eventsByHost
+            events: eventData
         })
     }
     catch (error) {
@@ -261,6 +286,7 @@ const getEventsByNewest = async (req, res) => {
             const locations = event.specificDateInfo.map(info => info.location)
 
             return {
+                _id: event._id,
                 title: event.title,
                 image: event.image,
                 dates,

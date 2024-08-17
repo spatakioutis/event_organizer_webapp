@@ -34,6 +34,7 @@ const ProfilePage = () => {
             display="flex"
             justifyContent="center"
             alignItems="center"
+            // marginLeft="100px"
         >
             <Box 
                 padding="2rem"
