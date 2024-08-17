@@ -279,7 +279,7 @@ const NewEventForm = () => {
                                                                 <Field
                                                                     name={`specificDateInfo.${index}.date`}
                                                                     as={TextField}
-                                                                    type="date"
+                                                                    type="datetime-local"
                                                                     label="Date"
                                                                     variant="outlined"
                                                                     fullWidth

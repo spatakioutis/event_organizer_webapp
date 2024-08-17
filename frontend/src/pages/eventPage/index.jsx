@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import FlexBetween from '../../components/FlexBetween'
+import TicketCard from '../../components/ticketCard'
 
 const EventPage = () => {
 
@@ -58,6 +59,7 @@ const EventPage = () => {
             borderRadius="15px"
             display="grid"
             gridTemplateRows="1fr auto"
+            sx={{minWidth: "60vw"}}
         >
             <Box 
                 sx={{
@@ -184,7 +186,45 @@ const EventPage = () => {
                         </Typography>                        
                     </Box>
                     <Box >
-                        
+
+                        <Typography
+                            color="black"
+                            fontSize="14pt"
+                            fontWeight="bold"
+                            marginTop="30px"
+                        >
+                            Buy tickets
+                        </Typography>
+
+                        <Box
+                            padding="15px"
+                            display="flex"
+                            justifyContent="flex-start"
+                            alignItems="center"
+                            gap="50px"
+                        >
+                            <Typography color="black" fontWeight="bold" marginLeft="20px">Date / Time</Typography>
+                            <Typography color="black" fontWeight="bold" marginLeft="35px">Location</Typography>
+                            <Typography color="black" fontWeight="bold" marginLeft="10px">Price</Typography>
+                            <Typography color="black" fontWeight="bold" marginLeft="35px">Number of Tickets</Typography>
+                        </Box>
+
+                        <TicketCard
+                            eventID={eventId}
+                            date={event.specificDateInfo[0].date}
+                            location={event.specificDateInfo[0].location}
+                            price={event.ticketPrice}
+                            totalSeats={event.totalSeats}
+                            seatsAvailable={event.seatsAvailable}
+                        />
+                        <TicketCard
+                            eventID={eventId}
+                            date={event.specificDateInfo[1].date}
+                            location={event.specificDateInfo[1].location}
+                            price={event.ticketPrice}
+                            totalSeats={event.totalSeats}
+                            seatsAvailable={event.seatsAvailable}
+                        />
                     </Box>
                     
                 </Box>
