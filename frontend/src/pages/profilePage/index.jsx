@@ -32,10 +32,11 @@ const ProfilePage = () => {
     <>
         <Navbar />
         <Box 
+            //backgroundColor="red"
+            marginTop="80px"
             display="flex"
             justifyContent="center"
             alignItems="center"
-            // marginLeft="100px"
         >
             <Box 
                 padding="2rem"
