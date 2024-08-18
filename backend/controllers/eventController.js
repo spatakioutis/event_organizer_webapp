@@ -201,10 +201,10 @@ const getEventsByType = async (req, res) => {
         let events = await Event.find({ type, 'specificDateInfo.date': { $gte: today } })
                                 .sort({ createdAt: -1 })
 
-        if (!fetchAll) {
-            events = events.limit(4)
+        if (fetchAll === "false") {
+            events = events.slice(0,4)
         }
-
+                        
         // get only essential
         const eventData = events.map(event => {
 
@@ -274,11 +274,16 @@ const getEventsByHost = async (req, res) => {
 
 const getEventsByNewest = async (req, res) => {
     try {
+
+        const { fetchAll } = req.query
         // get events
         const today = new Date()
         let events = await Event.find({ 'specificDateInfo.date': { $gte: today } })
                                 .sort({ createdAt: -1 })
-                                .limit(4)
+
+        if (fetchAll === "false") {
+            events = events.slice(0,4)
+        }
 
         // get only essential
         const eventData = events.map(event => {

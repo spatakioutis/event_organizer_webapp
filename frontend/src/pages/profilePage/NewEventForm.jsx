@@ -117,7 +117,7 @@ const NewEventForm = () => {
                             <Box 
                                 display="grid"
                                 gap="20px"
-                                gridTemplateColumns="3"
+                                gridTemplateColumns="repeat(3, 1fr)"
                                 maxWidth="580px"
                                 sx = {{
                                     "& > div": {gridColumn: isNonMobile ? undefined : "span 4"}
@@ -125,6 +125,7 @@ const NewEventForm = () => {
                             >
                                 <Typography
                                     color="black"
+                                    sx={{ gridColumn: "span 3" }}
                                 >
                                     General Event Information
                                 </Typography>
@@ -343,7 +344,7 @@ const NewEventForm = () => {
                                     <Typography
                                         color="red"
                                         fontWeight="bold"
-                                        sx={{ gridColumn: "span 4" }}
+                                        sx={{ gridColumn: "span 3" }}
                                         maxWidth="100%"
                                     >
                                         {errorMessage}
@@ -364,7 +365,7 @@ const NewEventForm = () => {
                                                 border: "1px solid #ccc",
                                                 backgroundColor: "#9b59b6"
                                             },
-                                            gridColumn: "span 4"
+                                            gridColumn: "span 3"
                                         }}
                                     >
                                         CREATE EVENT
@@ -374,7 +375,7 @@ const NewEventForm = () => {
                                     <Typography
                                         color="green"
                                         fontWeight="bold"
-                                        sx={{ gridColumn: "span 4" }}
+                                        sx={{ gridColumn: "span 3" }}
                                     >
                                         {successMessage}
                                     </Typography>

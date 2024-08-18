@@ -86,22 +86,22 @@ const Navbar = () => {
                         <StyledTab
                             label="Movies"
                             component={Link}
-                            to="/events/Movies"
+                            to="/events/category/Movies"
                         />
                         <StyledTab
                             label="Theater"
                             component={Link}
-                            to="/events/Theater"
+                            to="/events/category/Theater"
                         />
                         <StyledTab
                             label="Music"
                             component={Link}
-                            to="events/Music"
+                            to="/events/category/Music"
                         />
                         <StyledTab
                             label="Sports"
                             component={Link}
-                            to="/events/Sports"
+                            to="/events/category/Sports"
                         />
                     </Tabs>
 

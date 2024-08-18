@@ -3,6 +3,7 @@ import HomePage from './pages/homePage'
 import LoginPage from './pages/loginPage'
 import ProfilePage from './pages/profilePage'
 import EventPage from './pages/eventPage'
+import EventTypePage from './pages/eventTypePage'
 
 const App = () => {
 
@@ -24,6 +25,10 @@ const App = () => {
 				<Route 
 					path="/profile/:userId" 
 					element={<ProfilePage />}
+				/>
+				<Route 
+					path="/events/category/:type" 
+					element={<EventTypePage />}
 				/>
 				<Route 
 					path="/events/:eventId" 
