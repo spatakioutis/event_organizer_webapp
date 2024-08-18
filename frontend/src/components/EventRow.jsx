@@ -76,7 +76,7 @@ const EventRow = (props) => {
             </FlexBetween>
             {eventCards.length > 0 ? (
                 <Box
-                    padding="5px 0"
+                    padding="10px 0"
                     display="grid"
                     gap="15px"
                     gridTemplateColumns="repeat(4, 1fr)"

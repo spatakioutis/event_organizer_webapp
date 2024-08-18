@@ -41,7 +41,7 @@ const BookingCard = (props) => {
         <Box 
             onClick={() => navigate(`/events/${props.eventID}`)}
             width="280px" 
-            height="250px"
+            height="300px"
             display="grid"
             gridTemplateRows="6fr"
             sx={{
@@ -56,7 +56,7 @@ const BookingCard = (props) => {
         >
             <Box 
                 sx={{
-                    gridRow: "span 3"
+                    height: "160px"
                 }}
             >
                 <img
@@ -78,6 +78,13 @@ const BookingCard = (props) => {
                 color="black"
                 fontWeight="bold"
                 textAlign="left"
+                sx={{
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical"
+                }}
             >
                 {props.title}
             </Typography>

@@ -21,7 +21,7 @@ const TicketCard = (props) => {
     const [errorMessage, setErrorMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
     const token = useSelector((state) => state.token)
-    const disabledButton = (props.seatsAvailable === 0) || (new Date(props.date) < new Date());
+    const disabledButton = (props.seatsAvailable === 0) || (new Date(props.date) < new Date())
 
     const takeFormattedDate = (dateString) => {
         const date = new Date(dateString)
@@ -71,113 +71,120 @@ const TicketCard = (props) => {
     }
 
     return (
-        <Box>
+        <Box
+            display="flex"
+            justifyContent="flex-start"
+            alignItems="center"
+        >
             <Box
                 padding="15px"
                 display="flex"
-                justifyContent="flex-start"
+                justifyContent="space-evenly"
                 alignItems="center"
                 gap="80px"
                 height="50px"
+                width="1000px"
             >
-                <Typography
-                    color="black"
-                >
+                <Typography color="black" width="100px">
                     {takeFormattedDate(props.date)}
                 </Typography>
-                <Typography
+                <Typography 
                     color="black"
+                    sx={{
+                        width: "200px",
+                        wordWrap: "break-word",
+                        overflow: "wrap",
+                        overflowWrap: "break-word",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical"
+                    }} 
                 >
                     {props.location}
                 </Typography>
-                <Typography
-                    color="black"
-                >
+                <Typography color="black" width="50px">
                     {props.price}€
                 </Typography>
-                
-                
                 <Formik
                     onSubmit={handleFormSubmit}
-                    initialValues={{numOfTickets: 1}}
+                    initialValues={{ numOfTickets: 1 }}
                     validationSchema={validationSchema}
                 >
-                    {
-                        ({
-                            values,
-                            errors,
-                            touched,
-                            handleBlur,
-                            handleChange,
-                            handleSubmit,
-                            setFieldValue,
-                            resetForm
-                        }) => (
-                            <form onSubmit={handleSubmit}>
-                                <Box
-                                    padding="10px"
-                                    display="grid"
-                                    gap="20px"
-                                    gridTemplateColumns="3fr 5fr"
-                                    maxWidth="400px"
-                                    margin="0 auto"
-                                    sx = {{
-                                        "& > div": {gridColumn: isNonMobile ? undefined : "span 4"}
-                                    }}
-                                >
-                                    <TextField
-                                        type="number"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        value={values.numOfTickets}
-                                        name="numOfTickets"
-                                        error={Boolean(touched.numOfTickets) && Boolean(errors.numOfTickets)}
-                                        helperText={touched.numOfTickets && errors.numOfTickets}
-                                        sx={{ gridColumn: "span 1"}}
-                                    />
-                                    
-                                    <Box sx={{ gridColumn: "span 1", marginLeft: "40px"}}>   
-                                        {disabledButton ? (
-                                            <Button
-                                                fullWidth
-                                                disabled
-                                                sx={{
-                                                    m: "0",
-                                                    p: "1rem",
-                                                    backgroundColor: "#8f408f",
+                    {({
+                        values,
+                        errors,
+                        touched,
+                        handleBlur,
+                        handleChange,
+                        handleSubmit,
+                        setFieldValue,
+                        resetForm
+                    }) => (
+                        <form onSubmit={handleSubmit}>
+                            <Box
+                                padding="10px"
+                                display="grid"
+                                gap="20px"
+                                gridTemplateColumns="3fr 5fr"
+                                maxWidth="400px"
+                                margin="0 auto"
+                                sx={{
+                                    "& > div": { gridColumn: isNonMobile ? undefined : "span 4" }
+                                }}
+                            >
+                                <TextField
+                                    label="Number of Tickets"
+                                    type="number"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    value={values.numOfTickets}
+                                    name="numOfTickets"
+                                    error={Boolean(touched.numOfTickets) && Boolean(errors.numOfTickets)}
+                                    helperText={touched.numOfTickets && errors.numOfTickets}
+                                    sx={{ gridColumn: "span 1" }}
+                                />
+                                <Box sx={{ gridColumn: "span 1", marginLeft: "40px" }}>
+                                    {disabledButton ? (
+                                        <Button
+                                            fullWidth
+                                            disabled
+                                            sx={{
+                                                m: "0",
+                                                p: "1rem",
+                                                backgroundColor: "#8f408f",
+                                                color: "white",
+                                                gridColumn: "span 4"
+                                            }}
+                                        >
+                                            Book Tickets
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            fullWidth
+                                            type="submit"
+                                            sx={{
+                                                m: "0",
+                                                p: "1rem",
+                                                backgroundColor: "#800080",
+                                                color: "white",
+                                                "&:hover": {
                                                     color: "white",
-                                                    gridColumn: "span 4"
-                                                }}
-                                            >
-                                                Book Tickets
-                                            </Button>
-                                            ) : (
-                                            <Button
-                                                fullWidth
-                                                type="submit"
-                                                sx={{
-                                                    m: "0",
-                                                    p: "1rem",
-                                                    backgroundColor: "#800080",
-                                                    color: "white",
-                                                    "&:hover" : { 
-                                                        color: "white",
-                                                        border: "1px solid #ccc",
-                                                        backgroundColor: "green"
-                                                    },
-                                                    gridColumn: "span 4"
-                                                }}
-                                            >
-                                                Book Tickets
-                                            </Button>)
-                                        }
-                                    </Box>
-                                </Box>                                     
-                            </form>
-                        ) 
-                    } 
+                                                    border: "1px solid #ccc",
+                                                    backgroundColor: "green"
+                                                },
+                                                gridColumn: "span 4"
+                                            }}
+                                        >
+                                            Book Tickets
+                                        </Button>
+                                    )}
+                                </Box>
+                            </Box>
+                        </form>
+                    )}
                 </Formik>
-                {errorMessage && (
+            </Box>
+            {errorMessage && (
                     <Typography
                         color="red"
                         fontWeight="bold"
@@ -196,12 +203,8 @@ const TicketCard = (props) => {
                         {successMessage}
                     </Typography>
                 )}
-            </Box>
         </Box>
     )
-        
-
-
 }
 
 export default TicketCard

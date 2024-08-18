@@ -1,7 +1,8 @@
 import { 
     Box, 
     Typography,
-    Button
+    Button,
+    Grid
 } from '@mui/material'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
@@ -164,104 +165,105 @@ const EventPage = () => {
                         {( event.specificDateInfo.length > 1 ) ? `${takeFormmatedDate(event.specificDateInfo[0].date)} - ${takeFormmatedDate(event.specificDateInfo[event.specificDateInfo.length - 1].date)}` : `${takeFormmatedDate(event.specificDateInfo[0].date)}`}
                     </Typography>
                 </Box>
-                <Box
-                    marginTop="30px"
+            </Box>
+            <Box
+                padding="0 20px"
+                marginTop="30px"
+            >
+                <Typography
+                    color="black"
+                    fontSize="14pt"
+                    fontWeight="bold"
+                >
+                    Description
+                </Typography>
+                <Typography 
+                    color="black"
+                >
+                    {event.description}
+                </Typography>
+                
+            </Box>
+            <Box
+                padding="0 20px"
+                marginTop="30px"
+            >
+                <Typography
+                    color="black"
+                    fontSize="14pt"
+                    fontWeight="bold"
+                >
+                    Host information
+                </Typography>
+                <Typography 
+                    color="black"
+                    fontSize="14pt"
+                    marginTop="10px"
+                >
+                    { `${event.host.firstName} ${event.host.lastName}`}
+                </Typography>
+                <Box 
+                    display="flex"
+                    gap="10px"
                 >
                     <Typography
                         color="black"
-                        fontSize="14pt"
+                        fontSize="12pt"
                         fontWeight="bold"
                     >
-                        Description
+                        Email: 
                     </Typography>
-                    <Typography 
+                    <Typography
                         color="black"
+                        fontSize="12pt"
                     >
-                        {event.description}
+                        {event.host.email}
+                    </Typography> 
+
+                    <Typography
+                        color="black"
+                        fontSize="12pt"
+                        fontWeight="bold"
+                        marginLeft="30px"
+                    >
+                        Phone: 
                     </Typography>
-                    
+                    <Typography
+                        color="black"
+                        fontSize="12pt"
+                    >
+                        {event.host.phone}
+                    </Typography>                        
                 </Box>
-                <Box
+            </Box>
+            <Box 
+                padding="0 20px"
+            >
+                <Typography
+                    color="black"
+                    fontSize="14pt"
+                    fontWeight="bold"
                     marginTop="30px"
                 >
-                    <Typography
-                        color="black"
-                        fontSize="14pt"
-                        fontWeight="bold"
-                    >
-                        Host information
-                    </Typography>
-                    <Typography 
-                        color="black"
-                        fontSize="14pt"
-                        marginTop="10px"
-                    >
-                        { `${event.host.firstName} ${event.host.lastName}`}
-                    </Typography>
-                    <Box 
-                        display="flex"
-                        gap="10px"
-                    >
-                        <Typography
-                            color="black"
-                            fontSize="12pt"
-                            fontWeight="bold"
-                        >
-                            Email: 
-                        </Typography>
-                        <Typography
-                            color="black"
-                            fontSize="12pt"
-                        >
-                            {event.host.email}
-                        </Typography> 
-
-                        <Typography
-                            color="black"
-                            fontSize="12pt"
-                            fontWeight="bold"
-                            marginLeft="30px"
-                        >
-                            Phone: 
-                        </Typography>
-                        <Typography
-                            color="black"
-                            fontSize="12pt"
-                        >
-                            {event.host.phone}
-                        </Typography>                        
-                    </Box>
-                    <Box >
-
-                        <Typography
-                            color="black"
-                            fontSize="14pt"
-                            fontWeight="bold"
-                            marginTop="30px"
-                        >
-                            Buy tickets
-                        </Typography>
-
-                        <Box
-                            padding="15px"
-                            display="flex"
-                            justifyContent="flex-start"
-                            alignItems="center"
-                            gap="50px"
-                        >
-                            <Typography color="black" fontWeight="bold" marginLeft="20px">Date / Time</Typography>
-                            <Typography color="black" fontWeight="bold" marginLeft="35px">Location</Typography>
-                            <Typography color="black" fontWeight="bold" marginLeft="10px">Price</Typography>
-                            <Typography color="black" fontWeight="bold" marginLeft="35px">Number of Tickets</Typography>
-                        </Box>
-
-                        
-
-                        <Box>
-                            {bookingElements}
-                        </Box>
-                    </Box>
-                    
+                    Buy tickets
+                </Typography>
+                {/* <Box
+                    border="1px solid black"
+                    sx={{ maxWidth: "1000px" }}
+                    padding="15px"
+                    display="flex"
+                    justifyContent="space-evenly"
+                    alignItems="center"
+                    gap="80px"
+                    height="50px" // Match the height of the TicketCard rows
+                >
+                    <Typography color="black" fontWeight="bold">Date / Time</Typography>
+                    <Typography color="black" fontWeight="bold">Location</Typography>
+                    <Typography color="black" fontWeight="bold">Price</Typography>
+                    <Typography color="black" fontWeight="bold">Number of Tickets</Typography>
+                </Box> */}
+                <Box>
+                    {bookingElements}
                 </Box>
             </Box>
         </Box>

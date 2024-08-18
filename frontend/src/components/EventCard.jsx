@@ -25,7 +25,7 @@ const EventCard = ({event}) => {
         <Box 
             onClick={() => navigate(`/events/${event._id}`)}
             width="280px" 
-            height="250px"
+            height="300px"
             display="grid"
             gridTemplateRows="6fr"
             sx={{
@@ -40,7 +40,7 @@ const EventCard = ({event}) => {
         >
             <Box 
                 sx={{
-                    gridRow: "span 3"
+                    height: "160px"
                 }}
             >
                 <img
@@ -62,6 +62,13 @@ const EventCard = ({event}) => {
                 color="black"
                 fontWeight="bold"
                 textAlign="left"
+                sx={{
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical"
+                }}
             >
                 {event.title}
             </Typography>

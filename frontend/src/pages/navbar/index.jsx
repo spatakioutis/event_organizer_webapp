@@ -39,14 +39,28 @@ const Navbar = () => {
     }))
 
     return (
-        <FlexBetween 
-            padding="1rem 6%" 
+        <Box 
+            display="flex"
+            justifyContent="space-evenly"
+            alignItems="center"
+            padding="1rem" 
             backgroundColor="white"
+            gap="100px"
             sx={{
-                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)"
+                position: "fixed",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "50px",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                zIndex: 1
             }}
         >
-            <FlexBetween gap="1.75rem">
+            <Box 
+                gap="1.75rem" 
+                display="flex"
+
+            >
                 <Typography
                     fontWeight="bold"
                     fontSize="clamp(1rem, 2rem, 2.25rem)"
@@ -61,7 +75,7 @@ const Navbar = () => {
                     marginLeft="-20px"
                     backgroundColor="white"
                 >
-                    more.com
+                    Eventory
                 </Typography>
                 {isNonMobileScreens && (
                     <FlexBetween 
@@ -77,7 +91,7 @@ const Navbar = () => {
                         </IconButton>
                     </FlexBetween>
                 )}
-            </FlexBetween>
+            </Box>
 
             {/* Desktop nav */}
             {isNonMobileScreens && (
@@ -154,10 +168,12 @@ const Navbar = () => {
                             </MenuItem>
                         </Select>
                     </FormControl>
-                    <UserImage image={user.profilePic} />
+                    <UserImage 
+                        image={user.profilePic} 
+                    />
                 </FlexBetween>
             )}
-        </FlexBetween>
+        </Box>
     )
 }
 

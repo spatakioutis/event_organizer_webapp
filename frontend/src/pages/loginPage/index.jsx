@@ -27,7 +27,7 @@ const LoginPage = () => {
                     fontSize="32px"
                     color="#800080"
                 >
-                    more.com
+                    Eventory
                 </Typography>
             </Box>
 
@@ -48,7 +48,7 @@ const LoginPage = () => {
                     color="black"
                     sx={{ mb: "1.5rem", textAlign: "center" }}
                 >
-                    Welcome to more.com, the Social Media to manage and book events!
+                    Welcome to Eventory, the best place to manage and book events!
                 </Typography>
 
                 <Form />
