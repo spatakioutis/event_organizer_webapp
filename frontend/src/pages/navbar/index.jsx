@@ -84,6 +84,11 @@ const Navbar = () => {
                 <FlexBetween gap="2rem">
                     <Tabs value={false} aria-label="Navigation Tabs">
                         <StyledTab
+                            label="Newest"
+                            component={Link}
+                            to="/events/category/Newest"
+                        />
+                        <StyledTab
                             label="Movies"
                             component={Link}
                             to="/events/category/Movies"
