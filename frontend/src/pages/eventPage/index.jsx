@@ -247,21 +247,6 @@ const EventPage = () => {
                 >
                     Buy tickets
                 </Typography>
-                {/* <Box
-                    border="1px solid black"
-                    sx={{ maxWidth: "1000px" }}
-                    padding="15px"
-                    display="flex"
-                    justifyContent="space-evenly"
-                    alignItems="center"
-                    gap="80px"
-                    height="50px" // Match the height of the TicketCard rows
-                >
-                    <Typography color="black" fontWeight="bold">Date / Time</Typography>
-                    <Typography color="black" fontWeight="bold">Location</Typography>
-                    <Typography color="black" fontWeight="bold">Price</Typography>
-                    <Typography color="black" fontWeight="bold">Number of Tickets</Typography>
-                </Box> */}
                 <Box>
                     {bookingElements}
                 </Box>

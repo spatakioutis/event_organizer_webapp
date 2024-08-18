@@ -4,33 +4,20 @@ import {
  } from "@mui/material"
 import Navbar from '../../pages/navbar'
 import EventRow from "../../components/EventRow"
+import "../../styles/waveAnimation.css"
 
 const HomePage = () => {
     return (<>
         <Navbar />
-        {/* <Box
-            flex="1"
-            sx={{
-                position: 'absolute',
-                left: 0, 
-                top: '-100%',
-                bottom: 0,
-                width: '100vw',
-                backgroundColor: 'lightblue', 
-                clipPath: 'ellipse(70% 30% at 50% 50%)', 
-                zIndex: 0,
-                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)"
-            }}
-        >
-        </Box> */}
         <Box
             marginTop="80px"
             padding="100px 150px"
             sx={{
                 zIndex: 1,
                 backgroundColor: 'rgb(100, 20, 100)',
-                borderRadius: "40% 0 40% 0",
-                boxShadow: "6px 6px 3px 3px rgba(0, 0, 0, 0.3)"
+                borderRadius: "50% 0 50% 0",
+                boxShadow: "10px 6px 3px 3px rgba(0, 0, 0, 0.3)",
+                animation: 'waveAnimation 3s linear'
             }}
         >
             <Typography color="white" variant="h4" fontWeight="bold" gutterBottom>

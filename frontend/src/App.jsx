@@ -3,6 +3,7 @@ import HomePage from './pages/homePage'
 import LoginPage from './pages/loginPage'
 import ProfilePage from './pages/profilePage'
 import EventPage from './pages/eventPage'
+import UpdateEvent from './pages/eventPage/UpdateEvent'
 import EventTypePage from './pages/eventTypePage'
 
 const App = () => {
@@ -25,6 +26,10 @@ const App = () => {
 				<Route 
 					path="/profile/:userId" 
 					element={<ProfilePage />}
+				/>
+				<Route 
+					path="/events/update/:eventId" 
+					element={<UpdateEvent />}
 				/>
 				<Route 
 					path="/events/category/:type" 

@@ -53,7 +53,7 @@ const Navbar = () => {
                 width: "100%",
                 height: "50px",
                 boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                zIndex: 1
+                zIndex: 10
             }}
         >
             <Box 
