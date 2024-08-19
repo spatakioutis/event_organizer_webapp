@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { 
     Box,
     IconButton,
@@ -12,23 +11,64 @@ import {
     Tab,
     styled
  } from "@mui/material"
-import {
-    Search,
-    Message,
-    Notifications,
-    Help
-} from "@mui/icons-material"
+import { Search } from "@mui/icons-material"
+import axios from "axios"
+import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { setLogout } from "../../state"
 import { useNavigate, Link } from "react-router-dom"
 import FlexBetween from "../../components/FlexBetween"
 import UserImage from "../../components/UserImage"
+import DropdownSearch from "../../components/DropdownSearch"
 
 const Navbar = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const token = useSelector((state) => state.token)
     const user = useSelector((state) => state.user)
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)")
+    const [dropdownActive, setDropdownActive] = useState(false)
+    const [searchQuery, setSearchQuery] = useState("")
+    const [eventsFound, setEventsFound] = useState([])
+    
+    const handleChange = (e) => {
+        setSearchQuery(e.target.value)
+    } 
+
+    const fetchEvents = async (query) => {
+        if (!query) {
+            setDropdownActive(false)
+            return
+        }
+        try {
+            const {data: result} = await axios.get(
+                `http://localhost:3001/events/search?searchQuery=${query}`,
+                {
+                    headers: { "Authorization": `Bearer ${token}`}
+                }
+            )
+            setEventsFound(result.events)
+            setDropdownActive(true)
+        } catch (error) {
+            console.error("Error fetching search results: ", error)
+            setEventsFound([])
+            setDropdownActive(false)
+        }
+    }
+
+    useEffect(() => {
+        if (searchQuery.trim()) {
+            const timer = setTimeout(() => {
+                fetchEvents(searchQuery)
+            }, 1000)
+
+            return () => clearTimeout(timer)
+        }
+        else {
+            setEventsFound([])
+            setDropdownActive(false)
+        }
+    }, [searchQuery])
 
     const fullName = `${user.firstName} ${user.lastName}`
 
@@ -38,7 +78,7 @@ const Navbar = () => {
         },
     }))
 
-    return (
+    return (<>
         <Box 
             display="flex"
             justifyContent="space-evenly"
@@ -79,31 +119,20 @@ const Navbar = () => {
                         height="100%"
                     />
                 </Box>
-                {/* <Typography
-                    fontWeight="bold"
-                    fontSize="clamp(1rem, 2rem, 2.25rem)"
-                    color="#800080"
-                    onClick={() => navigate("/home")}
-                    sx={{
-                        ":hover": {
-                            color: "#9370DB",
-                            cursor: "pointer"
-                        }
-                    }}
-                    marginLeft="-20px"
-                    backgroundColor="white"
-                >
-                    Eventory
-                </Typography> */}
                 {isNonMobileScreens && (
                     <FlexBetween 
                         backgroundColor="white"
                         border="1px solid #ccc" 
-                        borderRadius="9px" 
                         gap="3rem"
                         padding="0.1rem 1.5rem"
                     >
-                        <InputBase placeholder="Search..."/>
+                        <InputBase 
+                            placeholder="Search..."
+                            onFocus={() => setDropdownActive(true)}
+                            onChange={handleChange}
+                            value={searchQuery}
+                            autoComplete="off"
+                        />
                         <IconButton>
                             <Search />
                         </IconButton>
@@ -192,7 +221,10 @@ const Navbar = () => {
                 </FlexBetween>
             )}
         </Box>
-    )
+        { dropdownActive && 
+            <DropdownSearch setDropdownActive={setDropdownActive} events={eventsFound}/>
+        }
+    </>)
 }
 
 export default Navbar

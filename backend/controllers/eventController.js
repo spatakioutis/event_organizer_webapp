@@ -312,4 +312,40 @@ const getEventsByNewest = async (req, res) => {
     }
 }
 
-export { createEvent, deleteEvent, updateEvent, getSingleEvent, getEventsByType, getEventsByHost, getEventsByNewest }
+const getEventsFromSearch = async (req, res) => {
+    try {
+        const {searchQuery} = req.query
+
+        const results = await Event.find({ 
+            title: { $regex: searchQuery, $options: 'i' } 
+        })
+
+        const events = results.map(event => {
+            return {
+                title: event.title,
+                eventID: event._id
+            }
+        })
+
+        res.status(200).json({
+            message: "Events from search fetched successfully",
+            events
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+export { 
+    createEvent,
+    deleteEvent, 
+    updateEvent, 
+    getSingleEvent, 
+    getEventsByType, 
+    getEventsByHost, 
+    getEventsByNewest,
+    getEventsFromSearch
+}
