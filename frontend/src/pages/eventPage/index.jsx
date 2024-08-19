@@ -85,7 +85,7 @@ const EventPage = () => {
     return (<>
         <Navbar />
         <Box 
-            margin="50px 100px"
+            margin="130px 100px 50px 100px"
             border="1px solid black"
             borderRadius="15px"
             display="grid"
@@ -122,19 +122,37 @@ const EventPage = () => {
                     >
                         {event.title}
                     </Typography>
-                    {event.host._id === user._id &&          
-                    <Button
-                        sx={{
-                            backgroundColor: "rgb(255,0,0)",
-                            color: "white",
-                            "&:hover": {
-                                backgroundColor: "rgb(255,80,80)"
-                            }
-                        }}
-                        onClick={deleteEvent}
-                    >
-                        Delete Event
-                    </Button>}
+                    {event.host._id === user._id && (
+                        <Box
+                            display="flex"
+                            gap="15px"
+                        >    
+                            <Button
+                                sx={{
+                                    backgroundColor: "rgb(90,90,255)",
+                                    color: "white",
+                                    "&:hover": {
+                                        backgroundColor: "rgb(120,120,255)"
+                                    }
+                                }}
+                                onClick={() => navigate(`/events/update/${eventId}`)}
+                            >
+                                Update Event
+                            </Button>    
+                            <Button
+                                sx={{
+                                    backgroundColor: "rgb(255,0,0)",
+                                    color: "white",
+                                    "&:hover": {
+                                        backgroundColor: "rgb(255,80,80)"
+                                    }
+                                }}
+                                onClick={deleteEvent}
+                            >
+                                Delete Event
+                            </Button>
+                        </Box>  
+                    )}
                 </FlexBetween>
 
                 <Box 

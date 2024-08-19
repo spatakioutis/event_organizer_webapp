@@ -15,75 +15,99 @@ import { Formik } from "formik"
 import Dropzone from "react-dropzone"
 import * as yup from "yup"
 import axios from 'axios'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+import { useParams, useNavigate } from "react-router-dom";
 
 const validationSchema = yup.object().shape({
     title: yup.string().required('Title is required'),
     duration: yup.number().required("Duration is required").min(0, "Duration must be positive"),
-    image: yup.string().required("Image is required"),
     description: yup.string().required("Description is required"),
     ticketPrice: yup.number().required("Ticket price is required").min(0, "Ticket price must be positive"),
     type: yup.string().required('Type is required').notOneOf(['Type'], 'Type is required'),
-    specificDateInfo: yup.array().of(
-        yup.object().shape({
-            date: yup.string().required('Date is required'),
-            location: yup.string().required('Location is required'),
-            totalSeats: yup.number().required('Number of seats is required').min(0, 'Total seats must be a non-negative number')
-        })
-    )
 })
-
-const initialValues = {
-    title: "",
-    duration: 0,
-    image: "",
-    description: "",
-    ticketPrice: 0,
-    type: ""
-}
 
 const UpdateEvent = () => {
 
+    const navigate = useNavigate()
+    const { eventId } = useParams()
     const token = useSelector((state) => state.token)
+    const [eventDetails, setEventDetails] = useState(null)
+    const [loading, setLoading] = useState(true)
     const [selectedType, setSelectedType] = useState("Type")
-    const [successMessage, setSuccessMessage] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
     const isNonMobile = useMediaQuery("(min-width: 1000px)")
 
-    const updateEvent = async (values, onSubmitProps) => {
+    useEffect(() => {
+        const fetchEventDetails = async () => {
+            try {
+                const {data: response} = await axios.get(
+                    `http://localhost:3001/events/${eventId}`,
+                    {
+                        headers: { "Authorization": `Bearer ${token}`}
+                    }
+                )
+                setEventDetails({
+                    title: response.event.title,
+                    duration: response.event.duration,
+                    description: response.event.description,
+                    ticketPrice: response.event.ticketPrice,
+                    type: response.event.type
+                })
+                setSelectedType(response.event.type)
+                setLoading(false)
+            }
+            catch (error) {
+                console.error('Error while fetching event data: ', error)
+                setLoading(false)
+            }
+        } 
+        fetchEventDetails()
+    }, [])
 
+    const updateEvent = async (values, onSubmitProps) => {
+        console.log("hello")
         const formData = new FormData()
-        for (let key in values) {
-            if (key === "image" && values.image) {
-                formData.append("image", values.image)
-            }
-            else {
-                formData.append(key, values[key])
-            }
-        }        
+        const updates = {
+            title: values.title,
+            duration: values.duration,
+            description: values.description,
+            ticketPrice: values.ticketPrice,
+            type: values.type,
+        }
+
+        formData.append('updates', JSON.stringify(updates))
+    
+        if (values.image) {
+            formData.append('image', values.image)
+        }      
 
         try {
-            const response = await axios.post(
-                "http://localhost:3001/events",
+            const {data: response} = await axios.put(
+                `http://localhost:3001/events/${eventId}`,
                 formData,
                 {
                     headers: { "Authorization": `Bearer ${token}`}
                 }
             )
-            console.log(response)
-            onSubmitProps.resetForm()
-            setSuccessMessage("Event updated successfully")
+            navigate(`/events/${eventId}`)
         }
         catch (error) {
             console.error("Error while trying to update event: ", error)
-            setSuccessMessage("")
             setErrorMessage(error.response.data.error)
         }
     }
 
     const handleFormSubmit = async (values, onSubmitProps) => {
         await updateEvent(values, onSubmitProps)
+    }
+
+    if (loading) {
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+                <Typography color="black">Loading...</Typography>
+            </Box>
+        )
     }
 
     return (<>
@@ -101,7 +125,7 @@ const UpdateEvent = () => {
             </Typography>
             <Formik
                     onSubmit={handleFormSubmit}
-                    initialValues={initialValues}
+                    initialValues={eventDetails}
                     validationSchema={validationSchema}
             >
                     {
@@ -247,7 +271,7 @@ const UpdateEvent = () => {
                                                         <input {...getInputProps()} />
                                                         {!values.image ? (
                                                             <p style={{textAlign: "center"}}>
-                                                                Add image here
+                                                                Add new image here
                                                             </p>
                                                         ) : (
                                                             <FlexBetween>
@@ -292,15 +316,6 @@ const UpdateEvent = () => {
                                             UPDATE EVENT
                                         </Button>
                                     </Box>
-                                    {successMessage && (
-                                        <Typography
-                                            color="green"
-                                            fontWeight="bold"
-                                            sx={{ gridColumn: "span 3" }}
-                                        >
-                                            {successMessage}
-                                        </Typography>
-                                    )}
                                 </Box>
                             </form>
                         )

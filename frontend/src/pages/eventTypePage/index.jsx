@@ -50,6 +50,7 @@ const EventTypePage = () => {
     return (<>
         <Navbar />
         <Box
+            marginTop="90px"
             display="flex"
             flexDirection="column"
             justifyContent="center"
