@@ -17,18 +17,24 @@ const LoginPage = () => {
                 width="100%" 
                 backgroundColor="white"
                 p="1rem"
-                textAlign="center"
+                display="flex"
+                justifyContent="center"
+
                 sx={{
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)"
                 }}
             >
-                <Typography
-                    fontWeight="bold"
-                    fontSize="32px"
-                    color="#800080"
+                <Box
+                    height="50px"
+                    width="100px"
                 >
-                    Eventory
-                </Typography>
+                    <img 
+                        src="http://localhost:3001/assets/logo transaparent.png" 
+                        alt="logo" 
+                        width="100%"
+                        height="100%"
+                    />
+                </Box>
             </Box>
 
             {/* form box */}

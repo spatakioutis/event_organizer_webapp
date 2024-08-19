@@ -59,9 +59,27 @@ const Navbar = () => {
             <Box 
                 gap="1.75rem" 
                 display="flex"
-
             >
-                <Typography
+                <Box
+                    height="50px"
+                    width="100px"
+                    onClick={() => navigate("/home")}
+                    sx={{
+                        ":hover": {
+                            cursor: "pointer",
+                            filter: "brightness(0.95)"
+                        }
+                    }}
+                    marginLeft="-20px"
+                >
+                    <img 
+                        src="http://localhost:3001/assets/logo transaparent.png" 
+                        alt="logo" 
+                        width="100%"
+                        height="100%"
+                    />
+                </Box>
+                {/* <Typography
                     fontWeight="bold"
                     fontSize="clamp(1rem, 2rem, 2.25rem)"
                     color="#800080"
@@ -76,7 +94,7 @@ const Navbar = () => {
                     backgroundColor="white"
                 >
                     Eventory
-                </Typography>
+                </Typography> */}
                 {isNonMobileScreens && (
                     <FlexBetween 
                         backgroundColor="white"
