@@ -86,7 +86,7 @@ const EventPage = () => {
         <Navbar />
         <Box 
             margin="130px 100px 50px 100px"
-            border="1px solid black"
+            boxShadow="3px 3px 4px 1px rgba(0,0,0,0.3)"
             borderRadius="15px"
             display="grid"
             gridTemplateRows="1fr auto"
