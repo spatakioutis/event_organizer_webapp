@@ -37,8 +37,7 @@ const DropdownSearch = (props) => {
     
     return (
         <Box 
-            sx={{ 
-                width: "100%", 
+            sx={{
                 backgroundColor: 'white',
                 color: 'white',
                 position: "absolute",
