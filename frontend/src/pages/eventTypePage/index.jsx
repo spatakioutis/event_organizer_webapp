@@ -50,20 +50,39 @@ const EventTypePage = () => {
     return (<>
         <Navbar />
         <Box
-            marginTop="90px"
+            marginTop="82px"
             display="flex"
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
         >
-            <Typography 
-                color="black"
-                fontWeight="bold"
-                fontSize="2.5rem"
-                margin="10px 0"
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                width="100%"
+                padding="10px 0"
+                borderBottom="2px solid black"
+                borderLeft="2px solid black"
+                borderRight="2px solid black"
+                borderRadius="0 0 30px 30px"
+                marginBottom="20px"
+                sx={{
+                    backgroundColor: "rgb(100, 20, 100)"
+                }}
             >
-                {type}
-            </Typography>
+                <Typography 
+                    color="white"
+                    fontWeight="bold"
+                    fontSize="2.5rem"
+                    letterSpacing="2px"
+                    fontFamily="'Raleway', sans-serif"
+                    textShadow="1px 1px 2px rgba(0, 0, 0, 0.1)"
+                >
+                    {type}
+                </Typography>
+            </Box>
+
             {eventCards.length > 0 ? (
                 <Box
                     padding="0 20px"

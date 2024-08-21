@@ -35,7 +35,7 @@ const HomePage = () => {
             justifyContent="center"
             alignItems="center"
             flexDirection="column"
-            gap="140px"
+            gap="100px"
             marginTop="90px"
         >
             <EventRow 
