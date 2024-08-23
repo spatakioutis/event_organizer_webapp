@@ -121,7 +121,7 @@ const UpdateEvent = () => {
             gap="15px"
         >
             <Typography color="black" fontWeight="bold" fontSize="26pt" sx={{textIndent: "-180px"}}>
-                Update event information
+                Update Event Information
             </Typography>
             <Formik
                     onSubmit={handleFormSubmit}
