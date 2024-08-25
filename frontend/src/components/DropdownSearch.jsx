@@ -20,7 +20,12 @@ const DropdownSearch = (props) => {
             <MenuItem 
                 onClick={() => handleClick({event})} 
                 key={event.eventID}
-                sx={{ paddingBottom: "10px"}}
+                sx={{ 
+                    paddingBottom: "10px",
+                    '&:hover': {
+                        backgroundColor: 'rgb(230,230,230)'
+                    }
+                }}
             >
                 <Typography 
                     color="black"
@@ -40,10 +45,10 @@ const DropdownSearch = (props) => {
             sx={{
                 backgroundColor: 'white',
                 color: 'white',
-                position: "absolute",
+                position: "fixed",
                 top: "67px",
                 left: "12.4%", 
-                width: "19%", 
+                width: "19.5%", 
                 padding: "5px 1rem",
                 boxShadow: "0px 3px 20px rgba(0, 0, 0, 0.3)",
                 zIndex: 11

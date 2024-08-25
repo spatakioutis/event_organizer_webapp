@@ -319,6 +319,7 @@ const getEventsFromSearch = async (req, res) => {
         const results = await Event.find({ 
             title: { $regex: searchQuery, $options: 'i' } 
         })
+        .limit(10)
 
         const events = results.map(event => {
             return {
