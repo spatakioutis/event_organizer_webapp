@@ -83,6 +83,8 @@ const getUserBookings = async (req, res) => {
         const today = new Date()
 
         const bookings = await Booking.find({user: userID})
+                                      .sort({ date: 1 })
+
 
         let bookingsInfo = await Promise.all(bookings.map(async (booking)  => { 
 
